@@ -13,7 +13,6 @@ if (!videoId) {
 
 setup({
   store: new DenoFileStore(storePath),
-  language: "ja",
 });
 
 console.log(JSON.stringify(await get_queue(videoId, null, { radio })));

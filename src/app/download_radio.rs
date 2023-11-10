@@ -3,7 +3,7 @@ use dioxus::prelude::*;
 
 use crate::{
     app::{macros::write_log, CommonState},
-    external::ytmusic::queue::get_queue,
+    external::ytmusic::{interface::VideoType, queue::get_queue},
     interface::video_id::VideoId,
     logic::download::download_tracks,
 };
@@ -27,7 +27,38 @@ pub fn RadioDownloadForm(cx: Scope) -> Element {
                 let res = async {
                     let video_id = VideoId::from_amibgous_url(&url);
                     write_log!(common_state, "Fetching radio: {}", url);
-                    let radio = get_queue(&video_id, !*download_single_song.get()).await?;
+                    let mut radio = get_queue(&video_id, !*download_single_song.get()).await?;
+
+                    if common_state.read().opts.exclude_video {
+                        write_log!(common_state, "Removing video tracks");
+                        radio.tracks = radio
+                            .tracks
+                            .into_iter()
+                            .filter_map(|track| {
+                                if !track.video_type.is_music() {
+                                    if let Some(counterpart) = track.counterpart {
+                                        if counterpart.video_type.is_music() {
+                                            write_log!(
+                                                common_state,
+                                                "Replaced video track with counterpart: \"{}\"",
+                                                track.title
+                                            );
+                                            return Some(*counterpart);
+                                        }
+                                    }
+                                    write_log!(
+                                        common_state,
+                                        "Removed video track: \"{}\"",
+                                        track.title
+                                    );
+                                    None
+                                } else {
+                                    Some(track)
+                                }
+                            })
+                            .collect();
+                    }
+
                     let tracks_len = radio.tracks.len();
                     write_log!(
                         common_state,

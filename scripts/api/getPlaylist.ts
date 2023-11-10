@@ -12,7 +12,6 @@ if (!playlistId) {
 
 setup({
   store: new DenoFileStore(storePath),
-  language: "ja",
 });
 
 console.log(JSON.stringify(await get_playlist(playlistId)));

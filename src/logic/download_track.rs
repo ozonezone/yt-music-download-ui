@@ -29,21 +29,44 @@ pub(crate) async fn download_track(
     let thumbnail = track
         .extract_best_thumbnail()
         .context("No thumbnail found")?;
-    let album = track.album.as_ref().context("No album")?;
-    let artist = track.artists.first().context("No artist")?;
+
+    let video_id = VideoId::from_id(&track.video_id);
+    let mut info = None;
+
+    let (album, artist) = {
+        let first_artist = track.artists.first();
+        if let (Some(album), Some(artist)) = (&track.album, first_artist) {
+            (album.name.clone(), artist.name.clone())
+        } else {
+            let i = get_video_info(&video_id, access_token).await?;
+            let r = match (&i.album, &i.artist) {
+                (Some(album), Some(artist)) => (album.clone(), artist.clone()),
+                _ => {
+                    return Err(anyhow::anyhow!(
+                        "No album or artist found for {}",
+                        track.video_id
+                    ))
+                }
+            };
+            info = Some(i);
+            r
+        }
+    };
 
     let path_str = format!(
         "./{DOWNLOAD_PATH}/{}/{}/{}.m4a",
-        sanitize(&artist.name),
-        sanitize(&album.name),
+        sanitize(&artist),
+        sanitize(&album),
         sanitize(&track.title)
     );
     let path = std::path::Path::new(&path_str);
 
     if !path.exists() || overwrite {
-        let video_id = VideoId::from_id(&track.video_id);
-
-        let info = get_video_info(&video_id, access_token).await?;
+        let info = if let Some(info) = info {
+            info
+        } else {
+            get_video_info(&video_id, access_token).await?
+        };
         let best_audio = info.get_best_audio().context("no audio found.")?;
 
         tokio::fs::create_dir_all(path.parent().expect("what")).await?;
@@ -77,8 +100,8 @@ pub(crate) async fn download_track(
             mp4ameta::Img::png(thumb_bin.to_vec())
         };
         let mut tag = mp4ameta::Tag::read_from_path(path)?;
-        tag.set_artist(&artist.name);
-        tag.set_album(&album.name);
+        tag.set_artist(&artist);
+        tag.set_album(&album);
         tag.set_title(&track.title);
         tag.set_artwork(tag_img);
         if let Some(year) = &track.year {

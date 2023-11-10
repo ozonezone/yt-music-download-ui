@@ -21,12 +21,6 @@ mod macros {
     pub(crate) use write_log;
 }
 
-struct CommonState {
-    downloading: bool,
-    opts: CommonOpts,
-    logs: Vec<String>,
-}
-
 macro_rules! option_checkbox {
     ($label:expr, $state:expr, $field:expr) => {
         rsx!(label {
@@ -44,6 +38,12 @@ macro_rules! option_checkbox {
     };
 }
 
+struct CommonState {
+    downloading: bool,
+    opts: CommonOpts,
+    logs: Vec<String>,
+}
+
 #[allow(clippy::redundant_closure_call)]
 pub fn App(cx: Scope) -> Element {
     use_shared_state_provider(cx, || CommonState {
@@ -52,6 +52,7 @@ pub fn App(cx: Scope) -> Element {
             overwrite: false,
             set_track_number: false,
             write_youtube_id: true,
+            exclude_video: true,
         },
         logs: Vec::new(),
     });
@@ -65,6 +66,11 @@ pub fn App(cx: Scope) -> Element {
             option_checkbox!("Overwrite existing files", common_state, overwrite),
             option_checkbox!("Set track number", common_state, set_track_number),
             option_checkbox!("Write youtube id", common_state, write_youtube_id),
+            option_checkbox!(
+                "Exclude video (if counterpart audio exists, it will be downloaded)", 
+                common_state, 
+                exclude_video
+            ),
             div { class: "border border-red-400 rounded-md p-2 flex flex-col gap-2",
                 h3 { class: "text-xl", "Logs" }
                 button {

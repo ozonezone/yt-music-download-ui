@@ -6,12 +6,21 @@ pub mod playlist;
 pub mod queue;
 
 #[allow(clippy::enum_variant_names)]
-#[derive(Deserialize, Clone, Debug)]
+#[derive(Deserialize, Clone, Debug, PartialEq)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum VideoType {
     MusicVideoTypeOmv,
     MusicVideoTypeUgc,
     MusicVideoTypeAtv,
+    MusicVideoTypePrivatelyOwnedTrack,
+}
+impl VideoType {
+    pub fn is_music(&self) -> bool {
+        matches!(
+            self,
+            VideoType::MusicVideoTypeAtv | VideoType::MusicVideoTypePrivatelyOwnedTrack
+        )
+    }
 }
 
 #[derive(Deserialize, Clone)]

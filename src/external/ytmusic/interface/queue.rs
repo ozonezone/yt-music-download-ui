@@ -6,13 +6,13 @@ use super::{Album, Artist, LikeStatus, Thumbnail, VideoType};
 #[serde(rename_all = "camelCase")]
 pub struct Queue {
     pub chips: Vec<QueueChip>,
-    pub playlist: String,
-    pub playlist_id: String,
+    pub playlist: Option<String>,
+    pub playlist_id: Option<String>,
     pub tracks: Vec<QueueTrack>,
-    pub lyrics: String,
+    pub lyrics: Option<String>,
     pub related: String,
     pub author: QueueAuthor,
-    pub continuation: String,
+    // pub continuation: String,
     pub current: QueueCurrent,
 }
 

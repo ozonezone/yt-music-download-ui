@@ -25,7 +25,24 @@ pub fn PlaylistDownloadForm(cx: Scope) -> Element {
                 let res = async {
                     let playlist_id = PlaylistId::from_ambigous_url(&url);
                     write_log!(common_state, "Fetching playlist: {}", url);
-                    let playlist = get_playlist(&playlist_id).await?;
+                    let mut playlist = get_playlist(&playlist_id).await?;
+
+                    if common_state.read().opts.exclude_video {
+                        write_log!(common_state, "Removing video tracks");
+                        playlist.tracks.retain(|track| {
+                            if track.video_type.is_music() {
+                                true
+                            } else {
+                                write_log!(
+                                    common_state,
+                                    "Removed video track: \"{}\"",
+                                    track.title
+                                );
+                                false
+                            }
+                        });
+                    }
+
                     let tracks_len = playlist.tracks.len();
                     write_log!(
                         common_state,

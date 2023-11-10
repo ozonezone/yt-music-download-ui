@@ -11,6 +11,7 @@ pub(crate) struct CommonOpts {
     pub overwrite: bool,
     pub set_track_number: bool,
     pub write_youtube_id: bool,
+    pub exclude_video: bool,
 }
 
 #[derive(Deserialize)]

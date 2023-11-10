@@ -7,6 +7,9 @@ use crate::interface::video_id::VideoId;
 #[derive(Deserialize, Clone)]
 pub(crate) struct YtdlVideoInfo {
     pub formats: Vec<YtdlVideoInfoFormat>,
+    pub album: Option<String>,
+    pub artist: Option<String>,
+    // pub track: Option<String>,
 }
 
 #[derive(Deserialize, Clone)]
