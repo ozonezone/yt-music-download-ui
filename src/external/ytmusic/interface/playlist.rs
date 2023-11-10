@@ -47,7 +47,7 @@ pub struct PlaylistTrack {
     pub duration: String,
     #[serde(rename = "duration_seconds")]
     pub duration_seconds: i64,
-    pub set_video_id: String,
+    // pub set_video_id: String,
     // pub feedback_tokens: Option<FeedbackTokens>,
     // pub feedback_token: Option<serde_json::Value>,
     // pub rank: Option<serde_json::Value>,

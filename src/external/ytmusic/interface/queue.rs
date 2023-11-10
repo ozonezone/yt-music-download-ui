@@ -25,7 +25,7 @@ pub struct QueueAuthor {
 #[serde(rename_all = "camelCase")]
 pub struct QueueChip {
     pub title: String,
-    pub playlist_id: String,
+    pub playlist_id: Option<String>,
     pub params: String,
 }
 
@@ -33,8 +33,8 @@ pub struct QueueChip {
 #[serde(rename_all = "camelCase")]
 pub struct QueueCurrent {
     pub video_id: String,
-    pub playlist_id: String,
-    pub index: i64,
+    pub playlist_id: Option<String>,
+    pub index: Option<i64>,
 }
 
 #[derive(Deserialize)]
