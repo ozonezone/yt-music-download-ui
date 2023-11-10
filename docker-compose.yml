@@ -1,6 +1,6 @@
 version: '3'
 services:
-  serv:
+  yt-music-download-ui:
     build: .
     image: ${IMAGE}
     ports:
