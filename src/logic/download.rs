@@ -2,7 +2,7 @@ use anyhow::Context;
 use futures::StreamExt;
 use serde::Deserialize;
 
-use crate::{constants::AUTH_FILE, external::ytmusic::playlist::MusePlaylistItem};
+use crate::{constants::AUTH_FILE, external::ytmusic::interface::CommonTrack};
 
 use super::download_track::download_track;
 
@@ -23,13 +23,14 @@ pub(crate) struct AuthToken {
 }
 
 pub(crate) async fn download_tracks(
-    tracks: Vec<MusePlaylistItem>,
+    tracks: Vec<impl Into<CommonTrack>>,
     opts: CommonOpts,
-    callback: impl Fn(MusePlaylistItem, anyhow::Result<()>) + Copy,
+    callback: impl Fn(CommonTrack, anyhow::Result<()>) + Copy,
 ) {
     let mut futures = Vec::new();
     let len = tracks.len();
     for (idx, track) in tracks.into_iter().enumerate() {
+        let track: CommonTrack = track.into();
         let track_number: Option<(u16, u16)> = if opts.set_track_number {
             Some(((idx + 1) as u16, len as u16))
         } else {
@@ -42,17 +43,13 @@ pub(crate) async fn download_tracks(
                     .context("Failed to load auth file")?;
                 let auth: Auth = serde_json::from_str(&auth_str)?;
                 let result: anyhow::Result<()> = download_track(
-                    track.clone(),
+                    &track,
                     opts.overwrite,
                     track_number,
                     opts.write_youtube_id,
                     &Some(auth.token.access_token),
                 )
                 .await;
-                // match result {
-                //     Ok(_) => write_log!(logs, "Downloaded {}", track.title),
-                //     Err(e) => write_log!(logs, "Failed to download {}: {}", track.title, e),
-                // };
                 result
             }
             .await;

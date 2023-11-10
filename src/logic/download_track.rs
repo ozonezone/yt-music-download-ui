@@ -1,6 +1,6 @@
 use crate::{
     constants::DOWNLOAD_PATH,
-    external::{ytdl::get_video_info, ytmusic::playlist::MusePlaylistItem},
+    external::{ytdl::get_video_info, ytmusic::interface::CommonTrack},
     interface::video_id::VideoId,
 };
 use anyhow::{Context, Result};
@@ -20,7 +20,7 @@ fn sanitize(s: &str) -> String {
 }
 
 pub(crate) async fn download_track(
-    track: MusePlaylistItem,
+    track: &CommonTrack,
     overwrite: bool,
     track_number: Option<(u16, u16)>,
     write_youtube_id: bool,

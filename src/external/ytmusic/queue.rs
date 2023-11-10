@@ -3,7 +3,7 @@ use tokio::process::Command;
 
 use crate::{constants::AUTH_FILE, interface::video_id::VideoId};
 
-use super::playlist::MusePlaylist;
+use super::interface::queue::Queue;
 
 // #[derive(Deserialize, Clone, Debug)]
 // pub(crate) struct MuseQueue {
@@ -13,7 +13,7 @@ use super::playlist::MusePlaylist;
 // }
 
 /// Get radio of song using ytmusicapi
-pub(crate) async fn get_queue(video_id: &VideoId, radio: bool) -> Result<MusePlaylist> {
+pub(crate) async fn get_queue(video_id: &VideoId, radio: bool) -> Result<Queue> {
     let output = Command::new("deno")
         .args([
             "run",
@@ -26,7 +26,9 @@ pub(crate) async fn get_queue(video_id: &VideoId, radio: bool) -> Result<MusePla
         .output()
         .await?;
     if output.status.success() {
-        let json: MusePlaylist = serde_json::from_str(&String::from_utf8(output.stdout)?)?;
+        let str = String::from_utf8(output.stdout)?;
+        let jd = &mut serde_json::Deserializer::from_str(&str);
+        let json: Queue = serde_path_to_error::deserialize(jd)?;
         Ok(json)
     } else {
         Err(anyhow::anyhow!(format!(

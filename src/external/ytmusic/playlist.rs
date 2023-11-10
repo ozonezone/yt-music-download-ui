@@ -1,72 +1,11 @@
 use anyhow::Result;
-use serde::Deserialize;
 use tokio::process::Command;
 
 use crate::{constants::AUTH_FILE, interface::playlist_id::PlaylistId};
 
-#[derive(Deserialize, Clone, Debug)]
-pub(crate) struct MusePlaylist {
-    pub tracks: Vec<MusePlaylistItem>,
-}
+use super::interface::playlist::Playlist;
 
-#[derive(Deserialize, Clone, Debug)]
-#[serde(rename_all = "camelCase")]
-pub(crate) struct MusePlaylistItem {
-    pub video_id: String,
-    pub title: String,
-    pub artists: Vec<MuseArtistRun>,
-    pub album: Option<MuseAlbum>,
-    pub thumbnails: Vec<MuseThumbnail>,
-    pub video_type: Option<MuseVideoType>,
-    pub year: Option<String>,
-}
-
-#[derive(Deserialize, Clone, Debug)]
-pub(crate) struct MuseArtistRun {
-    pub name: String,
-    pub id: Option<String>,
-}
-
-#[derive(Deserialize, Clone, Debug)]
-pub(crate) struct MuseAlbum {
-    pub name: String,
-    pub id: Option<String>,
-}
-
-#[derive(Deserialize, Clone, Debug)]
-pub(crate) struct MuseThumbnail {
-    pub url: String,
-    pub width: u32,
-    pub height: u32,
-}
-
-#[derive(Deserialize, Clone, Debug)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
-pub(crate) enum MuseVideoType {
-    MusicVideoTypeOmv,
-    MusicVideoTypeUgc,
-    MusicVideoTypeAtv,
-}
-
-impl MusePlaylistItem {
-    /// Get best quality thumbnail of track
-    pub fn extract_best_thumbnail(&self) -> Option<&MuseThumbnail> {
-        let mut best_thumbnail: Option<&MuseThumbnail> = None;
-        for thumbnail in &self.thumbnails {
-            let (best_width, _best_height) = match &best_thumbnail {
-                Some(best_thumbnail) => (best_thumbnail.width, best_thumbnail.height),
-                None => (0, 0),
-            };
-
-            if thumbnail.width > best_width {
-                best_thumbnail = Some(thumbnail);
-            }
-        }
-        best_thumbnail
-    }
-}
-
-pub(crate) async fn get_playlist(playlist: &PlaylistId) -> Result<MusePlaylist> {
+pub(crate) async fn get_playlist(playlist: &PlaylistId) -> Result<Playlist> {
     let output = Command::new("deno")
         .args([
             "run",
@@ -78,7 +17,9 @@ pub(crate) async fn get_playlist(playlist: &PlaylistId) -> Result<MusePlaylist> 
         .output()
         .await?;
     if output.status.success() {
-        let json: MusePlaylist = serde_json::from_str(&String::from_utf8(output.stdout)?)?;
+        let str = String::from_utf8(output.stdout)?;
+        let jd = &mut serde_json::Deserializer::from_str(&str);
+        let json: Playlist = serde_path_to_error::deserialize(jd)?;
         Ok(json)
     } else {
         Err(anyhow::anyhow!(format!(
