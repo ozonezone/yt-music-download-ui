@@ -1,0 +1,16 @@
+{
+  "imports": {
+    "muse/": "https://deno.land/x/muse@0.0.86/"
+  },
+  "tasks": {
+    "dev": "deno task css-dev & deno task app-run-watch",
+    "css-dev": "deno task css-start-reload-server & deno task css-build-watch",
+    "css-start-reload-server": "cd style && deno run -A https://deno.land/x/css_reload_server@0.1.3/main.ts ./dist/index.css",
+    "css-build": "cd style && deno run -A npm:tailwindcss -i index.css -o ./dist/index.css",
+    "css-build-watch": "cd style && deno run -A npm:tailwindcss -i index.css -o ./dist/index.css --watch",
+    "app-run": "export HOST=\"0.0.0.0:3030\" && cargo run",
+    "app-run-watch": "export HOST=\"0.0.0.0:3030\" && cargo watch -w src -x run",
+    "auth": "deno run -A ./scripts/auth.ts ./data/config/auth.json",
+    "docker-build": "docker compose build"
+  }
+}

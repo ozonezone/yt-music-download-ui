@@ -1,0 +1,12 @@
+version: '3'
+services:
+  serv:
+    build: .
+    image: ${IMAGE}
+    ports:
+      - "3030:3030"
+    volumes:
+      - "./data/downloads:/downloads"
+      - "./data/config:/config"
+    environment:
+      - HOST=0.0.0.0:3000

@@ -1,0 +1,18 @@
+[application]
+name = "yt-music-download-ui"
+default_platform = "desktop"
+
+[web.app]
+
+title = "yt-music-download-ui"
+
+[web.watcher]
+reload_html = true
+watch_path = ["src", "public"]
+
+[web.resource]
+style = []
+script = []
+
+[web.resource.dev]
+script = []
