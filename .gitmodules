@@ -1,0 +1,3 @@
+[submodule "scripts/server/muse"]
+	path = scripts/server/muse
+	url = https://ozonezone@github.com/ozonezone/muse
