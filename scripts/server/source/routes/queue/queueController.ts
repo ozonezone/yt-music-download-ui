@@ -1,5 +1,5 @@
 import { Body, Controller, Post, Route } from "tsoa";
-import { DenoFileStore, get_queue, Queue, setup } from "../../muse/mod.ts";
+import { DenoFileStore, get_queue, Queue, setup } from "libmuse";
 
 export type QueueGetParams = {
   videoId: string;

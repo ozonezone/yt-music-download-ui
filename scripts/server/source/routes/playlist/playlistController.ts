@@ -1,10 +1,5 @@
 import { Body, Controller, Post, Route } from "tsoa";
-import {
-  DenoFileStore,
-  get_playlist,
-  Playlist,
-  setup,
-} from "../../muse/mod.ts";
+import { DenoFileStore, get_playlist, Playlist, setup } from "libmuse";
 
 export type PlaylistGetParams = {
   playlistId: string;

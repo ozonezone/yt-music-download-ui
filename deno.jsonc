@@ -1,9 +1,5 @@
 {
-  "imports": {
-    "tsoa": "npm:tsoa@6.0.0-rc.4",
-    "@tsoa/runtime": "npm:@tsoa/runtime@6.0.0-rc.2",
-    "express": "npm:express"
-  },
+  "importMap": "./import_map.json",
   "tasks": {
     "dev": "deno task css-dev & deno task app-run-watch",
     "css-dev": "deno task css-start-reload-server & deno task css-build-watch",
@@ -14,6 +10,6 @@
     "app-run-watch": "export HOST=\"0.0.0.0:3030\" && cargo watch -w src -x run",
     "auth": "deno run -A ./scripts/auth.ts ./data/config/auth.json",
     "docker-build": "docker compose build",
-    "api-generate": "cd ./scripts && deno run -A ./generate.ts && deno run -A npm:@openapitools/openapi-generator-cli generate -i ./openapi/swagger.json -g rust -o ../../api"
+    "generate": "cd ./scripts/server/source && deno run -A ./generate.ts"
   }
 }

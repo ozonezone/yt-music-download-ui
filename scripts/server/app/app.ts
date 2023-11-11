@@ -1,6 +1,10 @@
 import express, { json, urlencoded } from "express";
 import { RegisterRoutes } from "./build/routes.ts";
-import { port } from "./config.ts";
+
+const port = Deno.args[0];
+if (!port) {
+  throw new Error("Please pass port");
+}
 
 export const app = express();
 

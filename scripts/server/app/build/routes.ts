@@ -3,9 +3,9 @@
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute, HttpStatusCodeLiteral, TsoaResponse, fetchMiddlewares } from '@tsoa/runtime';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { QueueController } from './../routes/queue/queueController.ts';
+import { QueueController } from './../../source/routes/queue/queueController.ts';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { PlaylistController } from './../routes/playlist/playlistController.ts';
+import { PlaylistController } from './../../source/routes/playlist/playlistController.ts';
 import type { RequestHandler, Router } from 'express';
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -48,7 +48,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "VideoType": {
         "dataType": "refAlias",
-        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["MUSIC_VIDEO_TYPE_OMV"]},{"dataType":"enum","enums":["MUSIC_VIDEO_TYPE_UGC"]},{"dataType":"enum","enums":["MUSIC_VIDEO_TYPE_ATV"]},{"dataType":"enum","enums":["MUSIC_VIDEO_TYPE_PRIVATELY_OWNED_TRACK"]}],"validators":{}},
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["MUSIC_VIDEO_TYPE_OMV"]},{"dataType":"enum","enums":["MUSIC_VIDEO_TYPE_UGC"]},{"dataType":"enum","enums":["MUSIC_VIDEO_TYPE_ATV"]}],"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "QueueTrack": {
@@ -107,7 +107,7 @@ const models: TsoaRoute.Models = {
             "related": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
             "author": {"dataType":"union","subSchemas":[{"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},"name":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true}}},{"dataType":"enum","enums":[null]}],"required":true},
             "continuation": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
-            "current": {"dataType":"union","subSchemas":[{"dataType":"nestedObjectLiteral","nestedProperties":{"index":{"dataType":"double"},"playlistId":{"dataType":"string","required":true},"videoId":{"dataType":"string","required":true}}},{"dataType":"enum","enums":[null]}],"required":true},
+            "current": {"dataType":"union","subSchemas":[{"dataType":"nestedObjectLiteral","nestedProperties":{"index":{"dataType":"double","required":true},"playlistId":{"dataType":"string","required":true},"videoId":{"dataType":"string","required":true}}},{"dataType":"enum","enums":[null]}],"required":true},
         },
         "additionalProperties": false,
     },
@@ -176,7 +176,7 @@ const models: TsoaRoute.Models = {
             "authors": {"dataType":"array","array":{"dataType":"refObject","ref":"ArtistRun"},"required":true},
             "type": {"dataType":"string","required":true},
             "year": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
-            "trackCount": {"dataType":"any","required":true},
+            "trackCount": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
             "duration": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
             "duration_seconds": {"dataType":"double","required":true},
             "tracks": {"dataType":"array","array":{"dataType":"refObject","ref":"PlaylistItem"},"required":true},

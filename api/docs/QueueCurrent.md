@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**index** | Option<**f64**> |  | [optional]
+**index** | Option<**f64**> |  | 
 **playlist_id** | **String** |  | 
 **video_id** | **String** |  | 
 
