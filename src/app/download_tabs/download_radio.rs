@@ -89,29 +89,9 @@ pub fn RadioDownloadForm(cx: Scope) -> Element {
                         radio.tracks = process_invalid_tracks(radio.tracks, common_state.clone());
                     }
 
-                    let tracks_len = radio.tracks.len();
-                    write_log!(
-                        common_state,
-                        "Download starting. Track list:\n{} \n({} tracks)",
-                        radio
-                            .tracks
-                            .iter()
-                            .map(|track| format!("  {}\n", track.title))
-                            .collect::<Vec<String>>()
-                            .join(""),
-                        tracks_len
-                    );
                     let opts = { common_state.read().opts };
-                    download_tracks(radio.tracks, opts, |track, res| match res {
-                        Ok(_) => {
-                            write_log!(common_state, "Downloaded: \"{}\"", track.title)
-                        }
-                        Err(e) => {
-                            write_log!(common_state, "Error downloading \"{}\": {}", track.title, e)
-                        }
-                    })
-                    .await;
-                    write_log!(common_state, "Download completed!");
+                    download_tracks(radio.tracks, opts, |msg| write_log!(common_state, "{msg}"))
+                        .await;
                     Ok(()) as Result<()>
                 }
                 .await;

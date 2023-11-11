@@ -50,29 +50,11 @@ pub fn PlaylistDownloadForm(cx: Scope) -> Element {
                         });
                     }
 
-                    let tracks_len = playlist.tracks.len();
-                    write_log!(
-                        common_state,
-                        "Download starting. Track list:\n{}({} tracks)",
-                        playlist
-                            .tracks
-                            .iter()
-                            .map(|track| format!("  {}\n", track.title))
-                            .collect::<Vec<String>>()
-                            .join(""),
-                        tracks_len
-                    );
                     let opts = { common_state.read().opts };
-                    download_tracks(playlist.tracks, opts, |track, res| match res {
-                        Ok(_) => {
-                            write_log!(common_state, "Downloaded: \"{}\"", track.title)
-                        }
-                        Err(e) => {
-                            write_log!(common_state, "Error downloading \"{}\": {}", track.title, e)
-                        }
+                    download_tracks(playlist.tracks, opts, |msg| {
+                        write_log!(common_state, "{msg}")
                     })
                     .await;
-                    write_log!(common_state, "Download completed!");
                     Ok(()) as Result<()>
                 }
                 .await;

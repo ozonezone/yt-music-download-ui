@@ -1,30 +1,22 @@
 use crate::{
-    config::CONFIG,
     external::{ytdl::get_video_info, ytmusic::CommonTrack},
     interface::video_id::VideoId,
 };
 use anyhow::{Context, Result};
 use futures::StreamExt;
 use mp4ameta::{Data, FreeformIdent};
-use std::io::Write;
+use std::{io::Write, path::Path};
 
-fn sanitize(s: &str) -> String {
-    sanitize_filename::sanitize_with_options(
-        s,
-        sanitize_filename::Options {
-            windows: false,
-            truncate: false,
-            replacement: " ",
-        },
-    )
+pub struct DownloadOpts {
+    pub track_number: Option<(u16, u16)>,
+    pub overwrite: bool,
+    pub write_youtube_id: bool,
 }
-
 pub(crate) async fn download_track(
     track: &CommonTrack,
-    overwrite: bool,
-    track_number: Option<(u16, u16)>,
-    write_youtube_id: bool,
     access_token: &Option<String>,
+    path: &Path,
+    opts: DownloadOpts,
 ) -> Result<()> {
     let thumbnail = track
         .extract_best_thumbnail()
@@ -32,24 +24,9 @@ pub(crate) async fn download_track(
 
     let video_id = VideoId::from_id(&track.video_id);
 
-    let album = track.album.clone().context("No album found")?;
-    let artist = track
-        .artists
-        .iter()
-        .map(|x| x.name.clone())
-        .collect::<Vec<_>>()
-        .join(", ");
+    let path = std::path::Path::new(&path);
 
-    let path_str = format!(
-        "./{}/{}/{}/{}.m4a",
-        CONFIG.download_path,
-        sanitize(&artist),
-        sanitize(&album),
-        sanitize(&track.title)
-    );
-    let path = std::path::Path::new(&path_str);
-
-    if !path.exists() || overwrite {
+    if !path.exists() || opts.overwrite {
         let info = get_video_info(&video_id, access_token).await?;
         let best_audio = info.get_best_audio().context("no audio found.")?;
 
@@ -84,17 +61,25 @@ pub(crate) async fn download_track(
             mp4ameta::Img::png(thumb_bin.to_vec())
         };
         let mut tag = mp4ameta::Tag::read_from_path(path)?;
+
+        let album = track.album.as_ref().context("No album found")?;
+        let artist = track
+            .artists
+            .iter()
+            .map(|x| x.name.clone())
+            .collect::<Vec<_>>()
+            .join(", ");
         tag.set_artist(&artist);
-        tag.set_album(&album);
+        tag.set_album(album.clone());
         tag.set_title(&track.title);
         tag.set_artwork(tag_img);
         if let Some(year) = &track.year {
             tag.set_year(year);
         }
-        if let Some(track_number) = track_number {
+        if let Some(track_number) = opts.track_number {
             tag.set_track(track_number.0, track_number.1);
         };
-        if write_youtube_id {
+        if opts.write_youtube_id {
             tag.set_data(
                 FreeformIdent::new("youtube_id", "youtube_id"),
                 Data::Utf8(track.video_id.clone()),

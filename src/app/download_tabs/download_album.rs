@@ -76,18 +76,6 @@ pub fn AlbumDownloadForm(cx: Scope) -> Element {
                         });
                     }
 
-                    let tracks_len = album.tracks.len();
-                    write_log!(
-                        common_state,
-                        "Download starting. Track list:\n{}({} tracks)",
-                        album
-                            .tracks
-                            .iter()
-                            .map(|track| format!("  {}\n", track.title))
-                            .collect::<Vec<String>>()
-                            .join(""),
-                        tracks_len
-                    );
                     let mut tracks: Vec<CommonTrack> =
                         album.tracks.into_iter().map(|track| track.into()).collect();
                     // Use album info for tracks
@@ -101,16 +89,7 @@ pub fn AlbumDownloadForm(cx: Scope) -> Element {
                     let mut opts = { common_state.read().opts };
                     // Always set track number for albums
                     opts.set_track_number = true;
-                    download_tracks(tracks, opts, |track, res| match res {
-                        Ok(_) => {
-                            write_log!(common_state, "Downloaded: \"{}\"", track.title)
-                        }
-                        Err(e) => {
-                            write_log!(common_state, "Error downloading \"{}\": {}", track.title, e)
-                        }
-                    })
-                    .await;
-                    write_log!(common_state, "Download completed!");
+                    download_tracks(tracks, opts, |msg| write_log!(common_state, "{msg}")).await;
                     Ok(()) as Result<()>
                 }
                 .await;
