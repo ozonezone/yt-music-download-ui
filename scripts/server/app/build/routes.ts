@@ -6,6 +6,8 @@ import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute, H
 import { QueueController } from './../../source/routes/queue/queueController.ts';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { PlaylistController } from './../../source/routes/playlist/playlistController.ts';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { SongController } from './../../source/routes/song/songController.ts';
 import type { RequestHandler, Router } from 'express';
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -193,6 +195,122 @@ const models: TsoaRoute.Models = {
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"language":{"dataType":"string"},"authPath":{"dataType":"string","required":true},"playlistId":{"dataType":"string","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "VideoFormat": {
+        "dataType": "refObject",
+        "properties": {
+            "container": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["flv"]},{"dataType":"enum","enums":["3gp"]},{"dataType":"enum","enums":["mp4"]},{"dataType":"enum","enums":["webm"]},{"dataType":"enum","enums":["ts"]}],"required":true},
+            "projection_type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["rectangular"]},{"dataType":"enum","enums":["360"]},{"dataType":"enum","enums":["stereoscopic"]},{"dataType":"enum","enums":["3d"]}],"required":true},
+            "mime_type": {"dataType":"string","required":true},
+            "modified": {"dataType":"datetime","required":true},
+            "itag": {"dataType":"double","required":true},
+            "init_range": {"dataType":"union","subSchemas":[{"dataType":"nestedObjectLiteral","nestedProperties":{"start":{"dataType":"double","required":true},"end":{"dataType":"double","required":true}}},{"dataType":"enum","enums":[null]}],"required":true},
+            "index_range": {"dataType":"union","subSchemas":[{"dataType":"nestedObjectLiteral","nestedProperties":{"start":{"dataType":"double","required":true},"end":{"dataType":"double","required":true}}},{"dataType":"enum","enums":[null]}],"required":true},
+            "content_length": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
+            "bitrate": {"dataType":"double","required":true},
+            "average_bitrate": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
+            "duration_ms": {"dataType":"double","required":true},
+            "url": {"dataType":"string","required":true},
+            "codecs": {"dataType":"string","required":true},
+            "has_audio": {"dataType":"enum","enums":[true],"required":true},
+            "has_video": {"dataType":"enum","enums":[true],"required":true},
+            "width": {"dataType":"double","required":true},
+            "height": {"dataType":"double","required":true},
+            "quality_label": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["144p"]},{"dataType":"enum","enums":["144p 15fps"]},{"dataType":"enum","enums":["144p60 HDR"]},{"dataType":"enum","enums":["240p"]},{"dataType":"enum","enums":["240p60 HDR"]},{"dataType":"enum","enums":["270p"]},{"dataType":"enum","enums":["360p"]},{"dataType":"enum","enums":["360p60 HDR"]},{"dataType":"enum","enums":["480p"]},{"dataType":"enum","enums":["480p60 HDR"]},{"dataType":"enum","enums":["720p"]},{"dataType":"enum","enums":["720p60"]},{"dataType":"enum","enums":["720p60 HDR"]},{"dataType":"enum","enums":["1080p"]},{"dataType":"enum","enums":["1080p60"]},{"dataType":"enum","enums":["1080p60 HDR"]},{"dataType":"enum","enums":["1440p"]},{"dataType":"enum","enums":["1440p60"]},{"dataType":"enum","enums":["1440p60 HDR"]},{"dataType":"enum","enums":["2160p"]},{"dataType":"enum","enums":["2160p60"]},{"dataType":"enum","enums":["2160p60 HDR"]},{"dataType":"enum","enums":["4320p"]},{"dataType":"enum","enums":["4320p60"]}],"required":true},
+            "fps": {"dataType":"double","required":true},
+            "video_codec": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "video_quality": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["tiny"]},{"dataType":"enum","enums":["small"]},{"dataType":"enum","enums":["medium"]},{"dataType":"enum","enums":["large"]},{"dataType":"enum","enums":["hd720"]},{"dataType":"enum","enums":["hd1080"]},{"dataType":"enum","enums":["hd1440"]},{"dataType":"enum","enums":["hd2160"]},{"dataType":"enum","enums":["highres"]}],"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "AudioFormat": {
+        "dataType": "refObject",
+        "properties": {
+            "container": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["flv"]},{"dataType":"enum","enums":["3gp"]},{"dataType":"enum","enums":["mp4"]},{"dataType":"enum","enums":["webm"]},{"dataType":"enum","enums":["ts"]}],"required":true},
+            "projection_type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["rectangular"]},{"dataType":"enum","enums":["360"]},{"dataType":"enum","enums":["stereoscopic"]},{"dataType":"enum","enums":["3d"]}],"required":true},
+            "mime_type": {"dataType":"string","required":true},
+            "modified": {"dataType":"datetime","required":true},
+            "itag": {"dataType":"double","required":true},
+            "init_range": {"dataType":"union","subSchemas":[{"dataType":"nestedObjectLiteral","nestedProperties":{"start":{"dataType":"double","required":true},"end":{"dataType":"double","required":true}}},{"dataType":"enum","enums":[null]}],"required":true},
+            "index_range": {"dataType":"union","subSchemas":[{"dataType":"nestedObjectLiteral","nestedProperties":{"start":{"dataType":"double","required":true},"end":{"dataType":"double","required":true}}},{"dataType":"enum","enums":[null]}],"required":true},
+            "content_length": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
+            "bitrate": {"dataType":"double","required":true},
+            "average_bitrate": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
+            "duration_ms": {"dataType":"double","required":true},
+            "url": {"dataType":"string","required":true},
+            "codecs": {"dataType":"string","required":true},
+            "has_audio": {"dataType":"enum","enums":[true],"required":true},
+            "has_video": {"dataType":"enum","enums":[false],"required":true},
+            "audio_quality": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["tiny"]},{"dataType":"enum","enums":["low"]},{"dataType":"enum","enums":["medium"]},{"dataType":"enum","enums":["high"]}],"required":true},
+            "channels": {"dataType":"double","required":true},
+            "sample_rate": {"dataType":"double","required":true},
+            "audio_codec": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "quality": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["tiny"]},{"dataType":"enum","enums":["small"]},{"dataType":"enum","enums":["medium"]},{"dataType":"enum","enums":["large"]}],"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Format": {
+        "dataType": "refAlias",
+        "type": {"dataType":"union","subSchemas":[{"ref":"VideoFormat"},{"ref":"AudioFormat"}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "VideoDetails": {
+        "dataType": "refObject",
+        "properties": {
+            "videoId": {"dataType":"string","required":true},
+            "title": {"dataType":"string","required":true},
+            "lengthSeconds": {"dataType":"double","required":true},
+            "channelId": {"dataType":"string","required":true},
+            "isOwnerViewing": {"dataType":"boolean","required":true},
+            "isCrawlable": {"dataType":"boolean","required":true},
+            "thumbnail": {"dataType":"nestedObjectLiteral","nestedProperties":{"thumbnails":{"dataType":"array","array":{"dataType":"refObject","ref":"Thumbnail"},"required":true}},"required":true},
+            "allowRatings": {"dataType":"enum","enums":[true],"required":true},
+            "viewCount": {"dataType":"double","required":true},
+            "author": {"dataType":"string","required":true},
+            "isPrivate": {"dataType":"boolean","required":true},
+            "isUnpluggedCorpus": {"dataType":"boolean","required":true},
+            "musicVideoType": {"ref":"VideoType","required":true},
+            "isLiveContent": {"dataType":"boolean","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Caption": {
+        "dataType": "refObject",
+        "properties": {
+            "url": {"dataType":"string","required":true},
+            "name": {"dataType":"string","required":true},
+            "vssId": {"dataType":"string","required":true},
+            "lang": {"dataType":"string","required":true},
+            "translatable": {"dataType":"boolean","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Song": {
+        "dataType": "refObject",
+        "properties": {
+            "formats": {"dataType":"array","array":{"dataType":"refAlias","ref":"Format"},"required":true},
+            "adaptive_formats": {"dataType":"array","array":{"dataType":"refAlias","ref":"Format"},"required":true},
+            "expires": {"dataType":"datetime","required":true},
+            "videoDetails": {"ref":"VideoDetails","required":true},
+            "playerConfig": {"dataType":"any","required":true},
+            "playbackTracking": {"dataType":"any","required":true},
+            "videostatsPlaybackUrl": {"dataType":"string","required":true},
+            "captions": {"dataType":"array","array":{"dataType":"refObject","ref":"Caption"},"required":true},
+            "hlsManifestUrl": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "aspectRatio": {"dataType":"double","required":true},
+            "serverAbrStreamingUrl": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "SongGetParams": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"language":{"dataType":"string"},"authPath":{"dataType":"string","required":true},"videoId":{"dataType":"string","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
 const validationService = new ValidationService(models);
 
@@ -247,6 +365,31 @@ export function RegisterRoutes(app: Router) {
 
 
               const promise = controller.getPlaylist.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/song',
+            ...(fetchMiddlewares<RequestHandler>(SongController)),
+            ...(fetchMiddlewares<RequestHandler>(SongController.prototype.getSong)),
+
+            function SongController_getSong(request: any, response: any, next: any) {
+            const args = {
+                    body: {"in":"body","name":"body","required":true,"ref":"SongGetParams"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SongController();
+
+
+              const promise = controller.getSong.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);

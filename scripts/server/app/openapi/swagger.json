@@ -650,6 +650,558 @@
           "playlistId"
         ],
         "type": "object"
+      },
+      "VideoFormat": {
+        "properties": {
+          "container": {
+            "type": "string",
+            "enum": [
+              "flv",
+              "3gp",
+              "mp4",
+              "webm",
+              "ts"
+            ]
+          },
+          "projection_type": {
+            "type": "string",
+            "enum": [
+              "360",
+              "rectangular",
+              "stereoscopic",
+              "3d"
+            ]
+          },
+          "mime_type": {
+            "type": "string"
+          },
+          "modified": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "itag": {
+            "type": "number",
+            "format": "double"
+          },
+          "init_range": {
+            "properties": {
+              "start": {
+                "type": "number",
+                "format": "double"
+              },
+              "end": {
+                "type": "number",
+                "format": "double"
+              }
+            },
+            "required": [
+              "start",
+              "end"
+            ],
+            "type": "object",
+            "nullable": true
+          },
+          "index_range": {
+            "properties": {
+              "start": {
+                "type": "number",
+                "format": "double"
+              },
+              "end": {
+                "type": "number",
+                "format": "double"
+              }
+            },
+            "required": [
+              "start",
+              "end"
+            ],
+            "type": "object",
+            "nullable": true
+          },
+          "content_length": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "bitrate": {
+            "type": "number",
+            "format": "double"
+          },
+          "average_bitrate": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "duration_ms": {
+            "type": "number",
+            "format": "double"
+          },
+          "url": {
+            "type": "string"
+          },
+          "codecs": {
+            "type": "string"
+          },
+          "has_audio": {
+            "type": "boolean",
+            "enum": [
+              true
+            ],
+            "nullable": false
+          },
+          "has_video": {
+            "type": "boolean",
+            "enum": [
+              true
+            ],
+            "nullable": false
+          },
+          "width": {
+            "type": "number",
+            "format": "double"
+          },
+          "height": {
+            "type": "number",
+            "format": "double"
+          },
+          "quality_label": {
+            "type": "string",
+            "enum": [
+              "144p",
+              "144p 15fps",
+              "144p60 HDR",
+              "240p",
+              "240p60 HDR",
+              "270p",
+              "360p",
+              "360p60 HDR",
+              "480p",
+              "480p60 HDR",
+              "720p",
+              "720p60",
+              "720p60 HDR",
+              "1080p",
+              "1080p60",
+              "1080p60 HDR",
+              "1440p",
+              "1440p60",
+              "1440p60 HDR",
+              "2160p",
+              "2160p60",
+              "2160p60 HDR",
+              "4320p",
+              "4320p60"
+            ]
+          },
+          "fps": {
+            "type": "number",
+            "format": "double"
+          },
+          "video_codec": {
+            "type": "string",
+            "nullable": true
+          },
+          "video_quality": {
+            "type": "string",
+            "enum": [
+              "tiny",
+              "small",
+              "medium",
+              "large",
+              "hd720",
+              "hd1080",
+              "hd1440",
+              "hd2160",
+              "highres"
+            ]
+          }
+        },
+        "required": [
+          "container",
+          "projection_type",
+          "mime_type",
+          "modified",
+          "itag",
+          "init_range",
+          "index_range",
+          "content_length",
+          "bitrate",
+          "average_bitrate",
+          "duration_ms",
+          "url",
+          "codecs",
+          "has_audio",
+          "has_video",
+          "width",
+          "height",
+          "quality_label",
+          "fps",
+          "video_codec",
+          "video_quality"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "AudioFormat": {
+        "properties": {
+          "container": {
+            "type": "string",
+            "enum": [
+              "flv",
+              "3gp",
+              "mp4",
+              "webm",
+              "ts"
+            ]
+          },
+          "projection_type": {
+            "type": "string",
+            "enum": [
+              "360",
+              "rectangular",
+              "stereoscopic",
+              "3d"
+            ]
+          },
+          "mime_type": {
+            "type": "string"
+          },
+          "modified": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "itag": {
+            "type": "number",
+            "format": "double"
+          },
+          "init_range": {
+            "properties": {
+              "start": {
+                "type": "number",
+                "format": "double"
+              },
+              "end": {
+                "type": "number",
+                "format": "double"
+              }
+            },
+            "required": [
+              "start",
+              "end"
+            ],
+            "type": "object",
+            "nullable": true
+          },
+          "index_range": {
+            "properties": {
+              "start": {
+                "type": "number",
+                "format": "double"
+              },
+              "end": {
+                "type": "number",
+                "format": "double"
+              }
+            },
+            "required": [
+              "start",
+              "end"
+            ],
+            "type": "object",
+            "nullable": true
+          },
+          "content_length": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "bitrate": {
+            "type": "number",
+            "format": "double"
+          },
+          "average_bitrate": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "duration_ms": {
+            "type": "number",
+            "format": "double"
+          },
+          "url": {
+            "type": "string"
+          },
+          "codecs": {
+            "type": "string"
+          },
+          "has_audio": {
+            "type": "boolean",
+            "enum": [
+              true
+            ],
+            "nullable": false
+          },
+          "has_video": {
+            "type": "boolean",
+            "enum": [
+              false
+            ],
+            "nullable": false
+          },
+          "audio_quality": {
+            "type": "string",
+            "enum": [
+              "tiny",
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          "channels": {
+            "type": "number",
+            "format": "double"
+          },
+          "sample_rate": {
+            "type": "number",
+            "format": "double"
+          },
+          "audio_codec": {
+            "type": "string",
+            "nullable": true
+          },
+          "quality": {
+            "type": "string",
+            "enum": [
+              "tiny",
+              "small",
+              "medium",
+              "large"
+            ]
+          }
+        },
+        "required": [
+          "container",
+          "projection_type",
+          "mime_type",
+          "modified",
+          "itag",
+          "init_range",
+          "index_range",
+          "content_length",
+          "bitrate",
+          "average_bitrate",
+          "duration_ms",
+          "url",
+          "codecs",
+          "has_audio",
+          "has_video",
+          "audio_quality",
+          "channels",
+          "sample_rate",
+          "audio_codec",
+          "quality"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Format": {
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/VideoFormat"
+          },
+          {
+            "$ref": "#/components/schemas/AudioFormat"
+          }
+        ]
+      },
+      "VideoDetails": {
+        "properties": {
+          "videoId": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "lengthSeconds": {
+            "type": "number",
+            "format": "double"
+          },
+          "channelId": {
+            "type": "string"
+          },
+          "isOwnerViewing": {
+            "type": "boolean"
+          },
+          "isCrawlable": {
+            "type": "boolean"
+          },
+          "thumbnail": {
+            "properties": {
+              "thumbnails": {
+                "items": {
+                  "$ref": "#/components/schemas/Thumbnail"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "thumbnails"
+            ],
+            "type": "object"
+          },
+          "allowRatings": {
+            "type": "boolean",
+            "enum": [
+              true
+            ],
+            "nullable": false
+          },
+          "viewCount": {
+            "type": "number",
+            "format": "double"
+          },
+          "author": {
+            "type": "string"
+          },
+          "isPrivate": {
+            "type": "boolean"
+          },
+          "isUnpluggedCorpus": {
+            "type": "boolean"
+          },
+          "musicVideoType": {
+            "$ref": "#/components/schemas/VideoType"
+          },
+          "isLiveContent": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "videoId",
+          "title",
+          "lengthSeconds",
+          "channelId",
+          "isOwnerViewing",
+          "isCrawlable",
+          "thumbnail",
+          "allowRatings",
+          "viewCount",
+          "author",
+          "isPrivate",
+          "isUnpluggedCorpus",
+          "musicVideoType",
+          "isLiveContent"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Caption": {
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "vssId": {
+            "type": "string"
+          },
+          "lang": {
+            "type": "string"
+          },
+          "translatable": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "url",
+          "name",
+          "vssId",
+          "lang",
+          "translatable"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Song": {
+        "properties": {
+          "formats": {
+            "items": {
+              "$ref": "#/components/schemas/Format"
+            },
+            "type": "array",
+            "deprecated": true
+          },
+          "adaptive_formats": {
+            "items": {
+              "$ref": "#/components/schemas/Format"
+            },
+            "type": "array"
+          },
+          "expires": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "videoDetails": {
+            "$ref": "#/components/schemas/VideoDetails"
+          },
+          "playerConfig": {},
+          "playbackTracking": {},
+          "videostatsPlaybackUrl": {
+            "type": "string"
+          },
+          "captions": {
+            "items": {
+              "$ref": "#/components/schemas/Caption"
+            },
+            "type": "array"
+          },
+          "hlsManifestUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "aspectRatio": {
+            "type": "number",
+            "format": "double"
+          },
+          "serverAbrStreamingUrl": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "formats",
+          "adaptive_formats",
+          "expires",
+          "videoDetails",
+          "playerConfig",
+          "playbackTracking",
+          "videostatsPlaybackUrl",
+          "captions",
+          "hlsManifestUrl",
+          "aspectRatio",
+          "serverAbrStreamingUrl"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "SongGetParams": {
+        "properties": {
+          "language": {
+            "type": "string"
+          },
+          "authPath": {
+            "type": "string"
+          },
+          "videoId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "authPath",
+          "videoId"
+        ],
+        "type": "object"
       }
     },
     "securitySchemes": {}
@@ -711,6 +1263,35 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/PlaylistGetParams"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/song": {
+      "post": {
+        "operationId": "GetSong",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Song"
+                }
+              }
+            }
+          }
+        },
+        "security": [],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SongGetParams"
               }
             }
           }

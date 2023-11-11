@@ -27,12 +27,16 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *DefaultApi* | [**get_playlist**](docs/DefaultApi.md#get_playlist) | **POST** /playlist | 
 *DefaultApi* | [**get_queue**](docs/DefaultApi.md#get_queue) | **POST** /queue | 
+*DefaultApi* | [**get_song**](docs/DefaultApi.md#get_song) | **POST** /song | 
 
 
 ## Documentation For Models
 
  - [Album](docs/Album.md)
  - [ArtistRun](docs/ArtistRun.md)
+ - [AudioFormat](docs/AudioFormat.md)
+ - [Caption](docs/Caption.md)
+ - [Format](docs/Format.md)
  - [LikeStatus](docs/LikeStatus.md)
  - [MenuTokens](docs/MenuTokens.md)
  - [ParsedPlaylist](docs/ParsedPlaylist.md)
@@ -45,8 +49,14 @@ Class | Method | HTTP request | Description
  - [QueueCurrent](docs/QueueCurrent.md)
  - [QueueGetParams](docs/QueueGetParams.md)
  - [QueueTrack](docs/QueueTrack.md)
+ - [Song](docs/Song.md)
+ - [SongGetParams](docs/SongGetParams.md)
  - [Thumbnail](docs/Thumbnail.md)
  - [TrendChange](docs/TrendChange.md)
+ - [VideoDetails](docs/VideoDetails.md)
+ - [VideoDetailsThumbnail](docs/VideoDetailsThumbnail.md)
+ - [VideoFormat](docs/VideoFormat.md)
+ - [VideoFormatInitRange](docs/VideoFormatInitRange.md)
  - [VideoType](docs/VideoType.md)
 
 
