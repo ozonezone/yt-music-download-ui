@@ -33,6 +33,7 @@ RUN apk add yt-dlp
 COPY --from=builder /volume/target/x86_64-unknown-linux-musl/release/yt-music-download-ui .
 COPY scripts /scripts
 COPY deno.jsonc .
-RUN deno cache --no-lock ./scripts/app.ts
+COPY import_map.json .
+RUN deno cache --no-lock ./scripts/server/app/app.ts
 
 ENTRYPOINT [ "/yt-music-download-ui" ]
