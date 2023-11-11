@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use anyhow::Result;
 use std::fmt::{Display, Formatter};
 
 pub(crate) struct PlaylistId {
@@ -13,26 +13,29 @@ impl Display for PlaylistId {
 
 impl PlaylistId {
     pub fn from_url(url: &str) -> Result<Self> {
-        let id = url
-            .split("list=")
-            .last()
-            .with_context(|| "No video id found: 01")?
-            .split('&')
-            .next()
-            .with_context(|| "No video id found: 02")?;
-        Ok(PlaylistId { id: id.to_string() })
+        let Ok(url) = url::Url::parse(url) else {
+            return Err(anyhow::anyhow!("Failed to parse url"));
+        };
+        let Some(playlist_id) = url.query_pairs().find(|q| q.0 == "list").map(|q| Self {
+            id: q.1.to_string(),
+        }) else {
+            return Err(anyhow::anyhow!("Failed to find playlist id from url"));
+        };
+
+        Ok(playlist_id)
     }
     pub fn from_id(id: &str) -> Self {
         PlaylistId { id: id.to_string() }
     }
-    pub fn to_url(&self) -> String {
-        format!("https://music.youtube.com/playlist?list={}", self.id)
-    }
-    pub fn from_ambigous_url(url: &str) -> Self {
-        if let Ok(id) = PlaylistId::from_url(url) {
+    pub fn from_id_or_url(str: &str) -> Self {
+        if let Ok(id) = PlaylistId::from_url(str) {
             id
         } else {
-            PlaylistId::from_id(url)
+            PlaylistId::from_id(str)
         }
+    }
+
+    pub fn to_url(&self) -> String {
+        format!("https://music.youtube.com/playlist?list={}", self.id)
     }
 }

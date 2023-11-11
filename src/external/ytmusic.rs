@@ -3,10 +3,6 @@ use openapi::models::{
 };
 use serde::Deserialize;
 
-pub mod playlist;
-pub mod queue;
-pub mod song;
-
 #[derive(Deserialize, Clone)]
 pub struct CommonTrack {
     pub video_id: String,

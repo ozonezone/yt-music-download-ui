@@ -407,18 +407,11 @@
       },
       "PlaylistGetParams": {
         "properties": {
-          "language": {
-            "type": "string"
-          },
-          "authPath": {
-            "type": "string"
-          },
           "playlistId": {
             "type": "string"
           }
         },
         "required": [
-          "authPath",
           "playlistId"
         ],
         "type": "object"
@@ -650,36 +643,22 @@
       },
       "AlbumGetParams": {
         "properties": {
-          "language": {
-            "type": "string"
-          },
-          "authPath": {
-            "type": "string"
-          },
           "browseId": {
             "type": "string"
           }
         },
         "required": [
-          "authPath",
           "browseId"
         ],
         "type": "object"
       },
       "AlbumGetByPlaylistIdParams": {
         "properties": {
-          "language": {
-            "type": "string"
-          },
-          "authPath": {
-            "type": "string"
-          },
           "playlistId": {
             "type": "string"
           }
         },
         "required": [
-          "authPath",
           "playlistId"
         ],
         "type": "object"
@@ -892,14 +871,8 @@
       },
       "QueueGetParams": {
         "properties": {
-          "language": {
-            "type": "string"
-          },
           "radio": {
             "type": "boolean"
-          },
-          "authPath": {
-            "type": "string"
           },
           "videoId": {
             "type": "string"
@@ -907,7 +880,6 @@
         },
         "required": [
           "radio",
-          "authPath",
           "videoId"
         ],
         "type": "object"
@@ -1448,18 +1420,11 @@
       },
       "SongGetParams": {
         "properties": {
-          "language": {
-            "type": "string"
-          },
-          "authPath": {
-            "type": "string"
-          },
           "videoId": {
             "type": "string"
           }
         },
         "required": [
-          "authPath",
           "videoId"
         ],
         "type": "object"

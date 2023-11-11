@@ -1,14 +1,8 @@
-mod download_form;
-mod download_playlist;
-mod download_radio;
-mod download_album;
-
 use dioxus::prelude::*;
 
-use crate::{
-    app::{download_playlist::PlaylistDownloadForm, download_radio::RadioDownloadForm},
-    logic::download::CommonOpts,
-};
+use crate::{logic::download::CommonOpts, app::download_tabs::DownloadTabs};
+
+mod download_tabs;
 
 mod macros {
     macro_rules! write_log {
@@ -62,9 +56,7 @@ pub fn App(cx: Scope) -> Element {
     cx.render(rsx! {
         fieldset { class: "w-full flex flex-col gap-2 p-1", "disabled": common_state.read().downloading,
             h1 { class: "text-2xl", "Youtube Music Downloader" }
-            RadioDownloadForm {}
-            PlaylistDownloadForm {}
-            AlbumDownloadForm {}
+            DownloadTabs {}
             option_checkbox!("Overwrite existing files", common_state, overwrite),
             option_checkbox!("Set track number", common_state, set_track_number),
             option_checkbox!("Write youtube id", common_state, write_youtube_id),

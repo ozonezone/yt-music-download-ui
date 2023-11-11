@@ -13,19 +13,13 @@
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AlbumGetParams {
-    #[serde(rename = "language", skip_serializing_if = "Option::is_none")]
-    pub language: Option<String>,
-    #[serde(rename = "authPath")]
-    pub auth_path: String,
     #[serde(rename = "browseId")]
     pub browse_id: String,
 }
 
 impl AlbumGetParams {
-    pub fn new(auth_path: String, browse_id: String) -> AlbumGetParams {
+    pub fn new(browse_id: String) -> AlbumGetParams {
         AlbumGetParams {
-            language: None,
-            auth_path,
             browse_id,
         }
     }

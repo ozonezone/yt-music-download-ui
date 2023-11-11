@@ -1,14 +1,62 @@
 use anyhow::Result;
 use dioxus::prelude::*;
+use openapi::{
+    apis::default_api::get_queue,
+    models::{QueueGetParams, QueueTrack},
+};
 
 use crate::{
     app::{macros::write_log, CommonState},
-    external::ytmusic::queue::get_queue,
+    config::API_CONFIG,
     interface::video_id::VideoId,
     logic::download::download_tracks,
 };
 
 use super::download_form::DownloadForm;
+
+/// Remove (or replace to counterpart if tracks has) track from tracks
+fn process_invalid_tracks(
+    tracks: Vec<QueueTrack>,
+    common_state: UseSharedState<CommonState>,
+) -> Vec<QueueTrack> {
+    tracks
+        .into_iter()
+        .filter_map(|track| {
+            let Some(video_type) = track.video_type else {
+                write_log!(
+                    common_state,
+                    "Removed video track. Failed to find video_type!: \"{}\"",
+                    track.title
+                );
+                return None;
+            };
+            if !video_type.is_music() {
+                if let Some(counterpart) = track.counterpart {
+                    let Some(video_type) = counterpart.video_type else {
+                        write_log!(
+                            common_state,
+                            "Removed video track. Failed to find video_type!: \"{}\"",
+                            track.title
+                        );
+                        return None;
+                    };
+                    if video_type.is_music() {
+                        write_log!(
+                            common_state,
+                            "Replaced video track with counterpart: \"{}\"",
+                            track.title
+                        );
+                        return Some(*counterpart);
+                    }
+                }
+                write_log!(common_state, "Removed video track: \"{}\"", track.title);
+                None
+            } else {
+                Some(track)
+            }
+        })
+        .collect()
+}
 
 #[allow(clippy::redundant_closure_call)]
 #[component]
@@ -17,7 +65,7 @@ pub fn RadioDownloadForm(cx: Scope) -> Element {
 
     let download_single_song = use_state(cx, || false);
 
-    let download = move |url: String| {
+    let download = move |input: String| {
         common_state.with_mut(|state| {
             state.downloading = true;
         });
@@ -25,54 +73,20 @@ pub fn RadioDownloadForm(cx: Scope) -> Element {
             to_owned![common_state, download_single_song];
             async move {
                 let res = async {
-                    let video_id = VideoId::from_amibgous_url(&url);
-                    write_log!(common_state, "Fetching radio: {}", url);
-                    let mut radio = get_queue(&video_id, !*download_single_song.get()).await?;
+                    let video_id = VideoId::from_id_or_url(&input);
+                    write_log!(common_state, "Fetching radio: {}", input);
+                    let mut radio = get_queue(
+                        &API_CONFIG,
+                        QueueGetParams {
+                            video_id: video_id.id,
+                            radio: !*download_single_song,
+                        },
+                    )
+                    .await?;
 
                     if common_state.read().opts.exclude_video {
                         write_log!(common_state, "Removing video tracks");
-                        radio.tracks = radio
-                            .tracks
-                            .into_iter()
-                            .filter_map(|track| {
-                                let Some(video_type) = track.video_type else {
-                                    write_log!(
-                                        common_state,
-                                        "Removed video track. Failed to find video_type!: \"{}\"",
-                                        track.title
-                                    );
-                                    return None;
-                                };
-                                if !video_type.is_music() {
-                                    if let Some(counterpart) = track.counterpart {
-                                        let Some(video_type) = counterpart.video_type else {
-                                            write_log!(
-                                                common_state,
-                                                "Removed video track. Failed to find video_type!: \"{}\"",
-                                                track.title
-                                            );
-                                            return None;
-                                        };
-                                        if video_type.is_music() {
-                                            write_log!(
-                                                common_state,
-                                                "Replaced video track with counterpart: \"{}\"",
-                                                track.title
-                                            );
-                                            return Some(*counterpart);
-                                        }
-                                    }
-                                    write_log!(
-                                        common_state,
-                                        "Removed video track: \"{}\"",
-                                        track.title
-                                    );
-                                    None
-                                } else {
-                                    Some(track)
-                                }
-                            })
-                            .collect();
+                        radio.tracks = process_invalid_tracks(radio.tracks, common_state);
                     }
 
                     let tracks_len = radio.tracks.len();

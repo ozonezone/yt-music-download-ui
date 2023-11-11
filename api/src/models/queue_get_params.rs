@@ -13,22 +13,16 @@
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct QueueGetParams {
-    #[serde(rename = "language", skip_serializing_if = "Option::is_none")]
-    pub language: Option<String>,
     #[serde(rename = "radio")]
     pub radio: bool,
-    #[serde(rename = "authPath")]
-    pub auth_path: String,
     #[serde(rename = "videoId")]
     pub video_id: String,
 }
 
 impl QueueGetParams {
-    pub fn new(radio: bool, auth_path: String, video_id: String) -> QueueGetParams {
+    pub fn new(radio: bool, video_id: String) -> QueueGetParams {
         QueueGetParams {
-            language: None,
             radio,
-            auth_path,
             video_id,
         }
     }

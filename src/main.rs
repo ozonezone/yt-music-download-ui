@@ -1,5 +1,3 @@
-use std::env;
-
 use anyhow::Result;
 use axum::{extract::WebSocketUpgrade, response::Html, routing::get, Router};
 
@@ -14,19 +12,21 @@ mod logic;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let addr: std::net::SocketAddr = env::var("HOST")
-        .expect("Env 'HOST' not found")
-        .parse()
-        .expect("Invalid 'HOST' env");
+    let addr: std::net::SocketAddr = CONFIG.host.parse().expect("Invalid 'HOST' env");
 
     tokio::spawn(async {
+        let mut args = vec![
+            "run",
+            "-A",
+            "./scripts/server/app/app.ts",
+            CONFIG.deno_server_port,
+            &format!("{}/auth.json", CONFIG.config_path),
+        ];
+        if let Some(lang) = CONFIG.language {
+            args.push(lang);
+        }
         let _ = tokio::process::Command::new("deno")
-            .args([
-                "run",
-                "-A",
-                "./scripts/server/app/app.ts",
-                CONFIG.deno_server_port,
-            ])
+            .args(args)
             .spawn()
             .expect("Failed to start deno server")
             .wait()

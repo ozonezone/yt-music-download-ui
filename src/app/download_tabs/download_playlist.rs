@@ -1,9 +1,10 @@
 use anyhow::Result;
 use dioxus::prelude::*;
+use openapi::{apis::default_api::get_playlist, models::PlaylistGetParams};
 
 use crate::{
     app::{macros::write_log, CommonState},
-    external::ytmusic::playlist::get_playlist,
+    config::API_CONFIG,
     interface::playlist_id::PlaylistId,
     logic::download::download_tracks,
 };
@@ -15,7 +16,7 @@ use super::download_form::DownloadForm;
 pub fn PlaylistDownloadForm(cx: Scope) -> Element {
     let common_state = use_shared_state::<CommonState>(cx).unwrap();
 
-    let download = move |url: String| {
+    let download = move |input: String| {
         common_state.with_mut(|state| {
             state.downloading = true;
         });
@@ -23,9 +24,15 @@ pub fn PlaylistDownloadForm(cx: Scope) -> Element {
             to_owned![common_state];
             async move {
                 let res = async {
-                    let playlist_id = PlaylistId::from_ambigous_url(&url);
-                    write_log!(common_state, "Fetching playlist: {}", url);
-                    let mut playlist = get_playlist(&playlist_id).await?;
+                    let playlist_id = PlaylistId::from_id_or_url(&input);
+                    write_log!(common_state, "Fetching playlist: {}", input);
+                    let mut playlist = get_playlist(
+                        &API_CONFIG,
+                        PlaylistGetParams {
+                            playlist_id: playlist_id.id,
+                        },
+                    )
+                    .await?;
 
                     if common_state.read().opts.exclude_video {
                         write_log!(common_state, "Removing video tracks");

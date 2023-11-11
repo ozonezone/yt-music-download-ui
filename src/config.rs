@@ -2,6 +2,7 @@ use once_cell::sync::Lazy;
 use openapi::apis::configuration::Configuration;
 
 pub(crate) struct Config {
+    pub(crate) host: &'static str,
     pub(crate) config_path: &'static str,
     pub(crate) download_path: &'static str,
     pub(crate) deno_server_port: &'static str,
@@ -10,6 +11,7 @@ pub(crate) struct Config {
 
 #[cfg(debug_assertions)]
 pub(crate) static CONFIG: Config = Config {
+    host: "0.0.0.0:3030",
     config_path: "./data/config",
     download_path: "./data/downloads",
     deno_server_port: "3031",
@@ -17,6 +19,7 @@ pub(crate) static CONFIG: Config = Config {
 };
 #[cfg(not(debug_assertions))]
 pub(crate) static CONFIG: Config = Config {
+    host: "0.0.0.0:3030",
     config_path: "/config",
     download_path: "/downloads",
     deno_server_port: "3031",

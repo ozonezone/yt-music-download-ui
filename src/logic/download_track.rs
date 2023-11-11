@@ -1,9 +1,6 @@
 use crate::{
     config::CONFIG,
-    external::{
-        ytdl::get_video_info,
-        ytmusic::{song::get_song, CommonTrack},
-    },
+    external::{ytdl::get_video_info, ytmusic::CommonTrack},
     interface::video_id::VideoId,
 };
 use anyhow::{Context, Result};
