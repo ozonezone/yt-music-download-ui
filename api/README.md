@@ -25,6 +25,8 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*DefaultApi* | [**get_album**](docs/DefaultApi.md#get_album) | **POST** /album | 
+*DefaultApi* | [**get_album_by_playlist_id**](docs/DefaultApi.md#get_album_by_playlist_id) | **POST** /albumByPlaylistId | 
 *DefaultApi* | [**get_playlist**](docs/DefaultApi.md#get_playlist) | **POST** /playlist | 
 *DefaultApi* | [**get_queue**](docs/DefaultApi.md#get_queue) | **POST** /queue | 
 *DefaultApi* | [**get_song**](docs/DefaultApi.md#get_song) | **POST** /song | 
@@ -33,12 +35,18 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [Album](docs/Album.md)
+ - [AlbumGetByPlaylistIdParams](docs/AlbumGetByPlaylistIdParams.md)
+ - [AlbumGetParams](docs/AlbumGetParams.md)
+ - [AlbumResult](docs/AlbumResult.md)
+ - [AlbumType](docs/AlbumType.md)
  - [ArtistRun](docs/ArtistRun.md)
  - [AudioFormat](docs/AudioFormat.md)
  - [Caption](docs/Caption.md)
  - [Format](docs/Format.md)
  - [LikeStatus](docs/LikeStatus.md)
+ - [MenuPlaylists](docs/MenuPlaylists.md)
  - [MenuTokens](docs/MenuTokens.md)
+ - [ParsedAlbum](docs/ParsedAlbum.md)
  - [ParsedPlaylist](docs/ParsedPlaylist.md)
  - [Playlist](docs/Playlist.md)
  - [PlaylistGetParams](docs/PlaylistGetParams.md)
@@ -51,6 +59,7 @@ Class | Method | HTTP request | Description
  - [QueueTrack](docs/QueueTrack.md)
  - [Song](docs/Song.md)
  - [SongGetParams](docs/SongGetParams.md)
+ - [SongRuns](docs/SongRuns.md)
  - [Thumbnail](docs/Thumbnail.md)
  - [TrendChange](docs/TrendChange.md)
  - [VideoDetails](docs/VideoDetails.md)

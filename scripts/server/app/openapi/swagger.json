@@ -7,26 +7,6 @@
     "requestBodies": {},
     "responses": {},
     "schemas": {
-      "QueueChip": {
-        "properties": {
-          "title": {
-            "type": "string"
-          },
-          "playlistId": {
-            "type": "string"
-          },
-          "params": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "title",
-          "playlistId",
-          "params"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
       "Thumbnail": {
         "properties": {
           "url": {
@@ -45,145 +25,6 @@
           "url",
           "width",
           "height"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "MenuTokens": {
-        "properties": {
-          "add": {
-            "type": "string",
-            "nullable": true
-          },
-          "remove": {
-            "type": "string",
-            "nullable": true
-          },
-          "saved": {
-            "type": "boolean"
-          }
-        },
-        "required": [
-          "add",
-          "remove",
-          "saved"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "LikeStatus": {
-        "type": "string",
-        "enum": [
-          "LIKE",
-          "INDIFFERENT",
-          "DISLIKE"
-        ]
-      },
-      "VideoType": {
-        "type": "string",
-        "enum": [
-          "MUSIC_VIDEO_TYPE_OMV",
-          "MUSIC_VIDEO_TYPE_UGC",
-          "MUSIC_VIDEO_TYPE_ATV",
-          "MUSIC_VIDEO_TYPE_PRIVATELY_OWNED_TRACK"
-        ]
-      },
-      "QueueTrack": {
-        "properties": {
-          "artists": {
-            "items": {
-              "$ref": "#/components/schemas/SongArtist"
-            },
-            "type": "array"
-          },
-          "album": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Album"
-              }
-            ],
-            "nullable": true
-          },
-          "views": {
-            "type": "string",
-            "nullable": true
-          },
-          "duration": {
-            "type": "string",
-            "nullable": true
-          },
-          "duration_seconds": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "year": {
-            "type": "string",
-            "nullable": true
-          },
-          "videoId": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "thumbnails": {
-            "items": {
-              "$ref": "#/components/schemas/Thumbnail"
-            },
-            "type": "array"
-          },
-          "feedbackTokens": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MenuTokens"
-              }
-            ],
-            "nullable": true
-          },
-          "likeStatus": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/LikeStatus"
-              }
-            ],
-            "nullable": true
-          },
-          "videoType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/VideoType"
-              }
-            ],
-            "nullable": true
-          },
-          "isExplicit": {
-            "type": "boolean"
-          },
-          "counterpart": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/QueueTrack"
-              }
-            ],
-            "nullable": true
-          }
-        },
-        "required": [
-          "artists",
-          "album",
-          "views",
-          "duration",
-          "duration_seconds",
-          "year",
-          "videoId",
-          "title",
-          "thumbnails",
-          "feedbackTokens",
-          "likeStatus",
-          "videoType",
-          "isExplicit",
-          "counterpart"
         ],
         "type": "object",
         "additionalProperties": false
@@ -233,113 +74,44 @@
         "type": "object",
         "additionalProperties": false
       },
-      "Queue": {
+      "LikeStatus": {
+        "type": "string",
+        "enum": [
+          "LIKE",
+          "INDIFFERENT",
+          "DISLIKE"
+        ]
+      },
+      "VideoType": {
+        "type": "string",
+        "enum": [
+          "MUSIC_VIDEO_TYPE_OMV",
+          "MUSIC_VIDEO_TYPE_UGC",
+          "MUSIC_VIDEO_TYPE_ATV",
+          "MUSIC_VIDEO_TYPE_PRIVATELY_OWNED_TRACK"
+        ]
+      },
+      "MenuTokens": {
         "properties": {
-          "chips": {
-            "items": {
-              "$ref": "#/components/schemas/QueueChip"
-            },
-            "type": "array"
-          },
-          "playlistId": {
+          "add": {
             "type": "string",
             "nullable": true
           },
-          "playlist": {
+          "remove": {
             "type": "string",
             "nullable": true
           },
-          "tracks": {
-            "items": {
-              "$ref": "#/components/schemas/QueueTrack"
-            },
-            "type": "array"
-          },
-          "lyrics": {
-            "type": "string",
-            "nullable": true
-          },
-          "related": {
-            "type": "string",
-            "nullable": true
-          },
-          "author": {
-            "properties": {
-              "id": {
-                "type": "string",
-                "nullable": true
-              },
-              "name": {
-                "type": "string",
-                "nullable": true
-              }
-            },
-            "required": [
-              "id",
-              "name"
-            ],
-            "type": "object",
-            "nullable": true
-          },
-          "continuation": {
-            "type": "string",
-            "nullable": true
-          },
-          "current": {
-            "properties": {
-              "index": {
-                "type": "number",
-                "format": "double"
-              },
-              "playlistId": {
-                "type": "string"
-              },
-              "videoId": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "videoId"
-            ],
-            "type": "object",
-            "nullable": true
+          "saved": {
+            "type": "boolean"
           }
         },
         "required": [
-          "chips",
-          "playlistId",
-          "playlist",
-          "tracks",
-          "lyrics",
-          "related",
-          "author",
-          "continuation",
-          "current"
+          "add",
+          "remove",
+          "saved"
         ],
         "type": "object",
         "additionalProperties": false
-      },
-      "QueueGetParams": {
-        "properties": {
-          "language": {
-            "type": "string"
-          },
-          "radio": {
-            "type": "boolean"
-          },
-          "authPath": {
-            "type": "string"
-          },
-          "videoId": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "radio",
-          "authPath",
-          "videoId"
-        ],
-        "type": "object"
       },
       "TrendChange": {
         "type": "string",
@@ -648,6 +420,495 @@
         "required": [
           "authPath",
           "playlistId"
+        ],
+        "type": "object"
+      },
+      "AlbumType": {
+        "type": "string",
+        "enum": [
+          "album",
+          "single",
+          "ep"
+        ]
+      },
+      "ParsedAlbum": {
+        "properties": {
+          "shuffleId": {
+            "type": "string",
+            "nullable": true
+          },
+          "radioId": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "album"
+            ],
+            "nullable": false
+          },
+          "title": {
+            "type": "string"
+          },
+          "year": {
+            "type": "string",
+            "nullable": true
+          },
+          "browseId": {
+            "type": "string"
+          },
+          "audioPlaylistId": {
+            "type": "string"
+          },
+          "thumbnails": {
+            "items": {
+              "$ref": "#/components/schemas/Thumbnail"
+            },
+            "type": "array"
+          },
+          "isExplicit": {
+            "type": "boolean"
+          },
+          "album_type": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AlbumType"
+              }
+            ],
+            "nullable": true
+          },
+          "artists": {
+            "items": {
+              "$ref": "#/components/schemas/ArtistRun"
+            },
+            "type": "array"
+          },
+          "libraryLikeStatus": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/LikeStatus"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "required": [
+          "shuffleId",
+          "radioId",
+          "type",
+          "title",
+          "year",
+          "browseId",
+          "audioPlaylistId",
+          "thumbnails",
+          "isExplicit",
+          "album_type",
+          "artists",
+          "libraryLikeStatus"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "SongRuns": {
+        "properties": {
+          "artists": {
+            "items": {
+              "$ref": "#/components/schemas/SongArtist"
+            },
+            "type": "array"
+          },
+          "album": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Album"
+              }
+            ],
+            "nullable": true
+          },
+          "views": {
+            "type": "string",
+            "nullable": true
+          },
+          "duration": {
+            "type": "string",
+            "nullable": true
+          },
+          "duration_seconds": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "year": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "artists",
+          "album",
+          "views",
+          "duration",
+          "duration_seconds",
+          "year"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "MenuPlaylists": {
+        "properties": {
+          "shuffleId": {
+            "type": "string",
+            "nullable": true
+          },
+          "radioId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "shuffleId",
+          "radioId"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "AlbumResult": {
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "album_type": {
+            "$ref": "#/components/schemas/AlbumType"
+          },
+          "thumbnails": {
+            "items": {
+              "$ref": "#/components/schemas/Thumbnail"
+            },
+            "type": "array"
+          },
+          "isExplicit": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "trackCount": {
+            "type": "string",
+            "nullable": true
+          },
+          "duration": {
+            "type": "string",
+            "nullable": true
+          },
+          "audioPlaylistId": {
+            "type": "string",
+            "nullable": true
+          },
+          "likeStatus": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/LikeStatus"
+              }
+            ],
+            "nullable": true
+          },
+          "id": {
+            "type": "string"
+          },
+          "tracks": {
+            "items": {
+              "$ref": "#/components/schemas/PlaylistItem"
+            },
+            "type": "array"
+          },
+          "other_versions": {
+            "items": {
+              "$ref": "#/components/schemas/ParsedAlbum"
+            },
+            "type": "array",
+            "nullable": true
+          }
+        },
+        "required": [
+          "title",
+          "album_type",
+          "thumbnails",
+          "isExplicit",
+          "description",
+          "trackCount",
+          "duration",
+          "audioPlaylistId",
+          "likeStatus",
+          "id",
+          "tracks",
+          "other_versions"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "AlbumGetParams": {
+        "properties": {
+          "language": {
+            "type": "string"
+          },
+          "authPath": {
+            "type": "string"
+          },
+          "browseId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "authPath",
+          "browseId"
+        ],
+        "type": "object"
+      },
+      "AlbumGetByPlaylistIdParams": {
+        "properties": {
+          "language": {
+            "type": "string"
+          },
+          "authPath": {
+            "type": "string"
+          },
+          "playlistId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "authPath",
+          "playlistId"
+        ],
+        "type": "object"
+      },
+      "QueueChip": {
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "playlistId": {
+            "type": "string"
+          },
+          "params": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "playlistId",
+          "params"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "QueueTrack": {
+        "properties": {
+          "artists": {
+            "items": {
+              "$ref": "#/components/schemas/SongArtist"
+            },
+            "type": "array"
+          },
+          "album": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Album"
+              }
+            ],
+            "nullable": true
+          },
+          "views": {
+            "type": "string",
+            "nullable": true
+          },
+          "duration": {
+            "type": "string",
+            "nullable": true
+          },
+          "duration_seconds": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "year": {
+            "type": "string",
+            "nullable": true
+          },
+          "videoId": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "thumbnails": {
+            "items": {
+              "$ref": "#/components/schemas/Thumbnail"
+            },
+            "type": "array"
+          },
+          "feedbackTokens": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/MenuTokens"
+              }
+            ],
+            "nullable": true
+          },
+          "likeStatus": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/LikeStatus"
+              }
+            ],
+            "nullable": true
+          },
+          "videoType": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VideoType"
+              }
+            ],
+            "nullable": true
+          },
+          "isExplicit": {
+            "type": "boolean"
+          },
+          "counterpart": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/QueueTrack"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "required": [
+          "artists",
+          "album",
+          "views",
+          "duration",
+          "duration_seconds",
+          "year",
+          "videoId",
+          "title",
+          "thumbnails",
+          "feedbackTokens",
+          "likeStatus",
+          "videoType",
+          "isExplicit",
+          "counterpart"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Queue": {
+        "properties": {
+          "chips": {
+            "items": {
+              "$ref": "#/components/schemas/QueueChip"
+            },
+            "type": "array"
+          },
+          "playlistId": {
+            "type": "string",
+            "nullable": true
+          },
+          "playlist": {
+            "type": "string",
+            "nullable": true
+          },
+          "tracks": {
+            "items": {
+              "$ref": "#/components/schemas/QueueTrack"
+            },
+            "type": "array"
+          },
+          "lyrics": {
+            "type": "string",
+            "nullable": true
+          },
+          "related": {
+            "type": "string",
+            "nullable": true
+          },
+          "author": {
+            "properties": {
+              "id": {
+                "type": "string",
+                "nullable": true
+              },
+              "name": {
+                "type": "string",
+                "nullable": true
+              }
+            },
+            "required": [
+              "id",
+              "name"
+            ],
+            "type": "object",
+            "nullable": true
+          },
+          "continuation": {
+            "type": "string",
+            "nullable": true
+          },
+          "current": {
+            "properties": {
+              "index": {
+                "type": "number",
+                "format": "double"
+              },
+              "playlistId": {
+                "type": "string"
+              },
+              "videoId": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "videoId"
+            ],
+            "type": "object",
+            "nullable": true
+          }
+        },
+        "required": [
+          "chips",
+          "playlistId",
+          "playlist",
+          "tracks",
+          "lyrics",
+          "related",
+          "author",
+          "continuation",
+          "current"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "QueueGetParams": {
+        "properties": {
+          "language": {
+            "type": "string"
+          },
+          "radio": {
+            "type": "boolean"
+          },
+          "authPath": {
+            "type": "string"
+          },
+          "videoId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "radio",
+          "authPath",
+          "videoId"
         ],
         "type": "object"
       },
@@ -1211,35 +1472,6 @@
     "version": "0.1.0"
   },
   "paths": {
-    "/queue": {
-      "post": {
-        "operationId": "GetQueue",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Queue"
-                }
-              }
-            }
-          }
-        },
-        "security": [],
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/QueueGetParams"
-              }
-            }
-          }
-        }
-      }
-    },
     "/playlist": {
       "post": {
         "operationId": "GetPlaylist",
@@ -1263,6 +1495,93 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/PlaylistGetParams"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/album": {
+      "post": {
+        "operationId": "GetAlbum",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlbumResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlbumGetParams"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/albumByPlaylistId": {
+      "post": {
+        "operationId": "GetAlbumByPlaylistId",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlbumResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlbumGetByPlaylistIdParams"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/queue": {
+      "post": {
+        "operationId": "GetQueue",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Queue"
+                }
+              }
+            }
+          }
+        },
+        "security": [],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueueGetParams"
               }
             }
           }

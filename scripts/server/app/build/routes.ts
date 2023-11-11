@@ -3,73 +3,26 @@
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute, HttpStatusCodeLiteral, TsoaResponse, fetchMiddlewares } from '@tsoa/runtime';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { QueueController } from './../../source/routes/queue/queueController.ts';
+import { PlaylistController } from './../../source/routes/playlistController.ts';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { PlaylistController } from './../../source/routes/playlist/playlistController.ts';
+import { AlbumController } from './../../source/routes/albumController.ts';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { SongController } from './../../source/routes/song/songController.ts';
+import { AlbumByPlaylistIdController } from './../../source/routes/albumController.ts';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { QueueController } from './../../source/routes/queueController.ts';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { SongController } from './../../source/routes/songController.ts';
 import type { RequestHandler, Router } from 'express';
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
-    "QueueChip": {
-        "dataType": "refObject",
-        "properties": {
-            "title": {"dataType":"string","required":true},
-            "playlistId": {"dataType":"string","required":true},
-            "params": {"dataType":"string","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Thumbnail": {
         "dataType": "refObject",
         "properties": {
             "url": {"dataType":"string","required":true},
             "width": {"dataType":"double","required":true},
             "height": {"dataType":"double","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "MenuTokens": {
-        "dataType": "refObject",
-        "properties": {
-            "add": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
-            "remove": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
-            "saved": {"dataType":"boolean","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "LikeStatus": {
-        "dataType": "refAlias",
-        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["LIKE"]},{"dataType":"enum","enums":["INDIFFERENT"]},{"dataType":"enum","enums":["DISLIKE"]}],"validators":{}},
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "VideoType": {
-        "dataType": "refAlias",
-        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["MUSIC_VIDEO_TYPE_OMV"]},{"dataType":"enum","enums":["MUSIC_VIDEO_TYPE_UGC"]},{"dataType":"enum","enums":["MUSIC_VIDEO_TYPE_ATV"]}],"validators":{}},
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "QueueTrack": {
-        "dataType": "refObject",
-        "properties": {
-            "artists": {"dataType":"array","array":{"dataType":"refAlias","ref":"SongArtist"},"required":true},
-            "album": {"dataType":"union","subSchemas":[{"ref":"Album"},{"dataType":"enum","enums":[null]}],"required":true},
-            "views": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
-            "duration": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
-            "duration_seconds": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
-            "year": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
-            "videoId": {"dataType":"string","required":true},
-            "title": {"dataType":"string","required":true},
-            "thumbnails": {"dataType":"array","array":{"dataType":"refObject","ref":"Thumbnail"},"required":true},
-            "feedbackTokens": {"dataType":"union","subSchemas":[{"ref":"MenuTokens"},{"dataType":"enum","enums":[null]}],"required":true},
-            "likeStatus": {"dataType":"union","subSchemas":[{"ref":"LikeStatus"},{"dataType":"enum","enums":[null]}],"required":true},
-            "videoType": {"dataType":"union","subSchemas":[{"ref":"VideoType"},{"dataType":"enum","enums":[null]}],"required":true},
-            "isExplicit": {"dataType":"boolean","required":true},
-            "counterpart": {"dataType":"union","subSchemas":[{"ref":"QueueTrack"},{"dataType":"enum","enums":[null]}],"required":true},
         },
         "additionalProperties": false,
     },
@@ -98,25 +51,24 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Queue": {
-        "dataType": "refObject",
-        "properties": {
-            "chips": {"dataType":"array","array":{"dataType":"refObject","ref":"QueueChip"},"required":true},
-            "playlistId": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
-            "playlist": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
-            "tracks": {"dataType":"array","array":{"dataType":"refObject","ref":"QueueTrack"},"required":true},
-            "lyrics": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
-            "related": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
-            "author": {"dataType":"union","subSchemas":[{"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},"name":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true}}},{"dataType":"enum","enums":[null]}],"required":true},
-            "continuation": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
-            "current": {"dataType":"union","subSchemas":[{"dataType":"nestedObjectLiteral","nestedProperties":{"index":{"dataType":"double","required":true},"playlistId":{"dataType":"string","required":true},"videoId":{"dataType":"string","required":true}}},{"dataType":"enum","enums":[null]}],"required":true},
-        },
-        "additionalProperties": false,
+    "LikeStatus": {
+        "dataType": "refAlias",
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["LIKE"]},{"dataType":"enum","enums":["INDIFFERENT"]},{"dataType":"enum","enums":["DISLIKE"]}],"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "QueueGetParams": {
+    "VideoType": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"language":{"dataType":"string"},"radio":{"dataType":"boolean","required":true},"authPath":{"dataType":"string","required":true},"videoId":{"dataType":"string","required":true}},"validators":{}},
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["MUSIC_VIDEO_TYPE_OMV"]},{"dataType":"enum","enums":["MUSIC_VIDEO_TYPE_UGC"]},{"dataType":"enum","enums":["MUSIC_VIDEO_TYPE_ATV"]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "MenuTokens": {
+        "dataType": "refObject",
+        "properties": {
+            "add": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "remove": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "saved": {"dataType":"boolean","required":true},
+        },
+        "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "TrendChange": {
@@ -193,6 +145,133 @@ const models: TsoaRoute.Models = {
     "PlaylistGetParams": {
         "dataType": "refAlias",
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"language":{"dataType":"string"},"authPath":{"dataType":"string","required":true},"playlistId":{"dataType":"string","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "AlbumType": {
+        "dataType": "refAlias",
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["album"]},{"dataType":"enum","enums":["single"]},{"dataType":"enum","enums":["ep"]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ParsedAlbum": {
+        "dataType": "refObject",
+        "properties": {
+            "shuffleId": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "radioId": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "type": {"dataType":"enum","enums":["album"],"required":true},
+            "title": {"dataType":"string","required":true},
+            "year": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "browseId": {"dataType":"string","required":true},
+            "audioPlaylistId": {"dataType":"string","required":true},
+            "thumbnails": {"dataType":"array","array":{"dataType":"refObject","ref":"Thumbnail"},"required":true},
+            "isExplicit": {"dataType":"boolean","required":true},
+            "album_type": {"dataType":"union","subSchemas":[{"ref":"AlbumType"},{"dataType":"enum","enums":[null]}],"required":true},
+            "artists": {"dataType":"array","array":{"dataType":"refObject","ref":"ArtistRun"},"required":true},
+            "libraryLikeStatus": {"dataType":"union","subSchemas":[{"ref":"LikeStatus"},{"dataType":"enum","enums":[null]}],"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "SongRuns": {
+        "dataType": "refObject",
+        "properties": {
+            "artists": {"dataType":"array","array":{"dataType":"refAlias","ref":"SongArtist"},"required":true},
+            "album": {"dataType":"union","subSchemas":[{"ref":"Album"},{"dataType":"enum","enums":[null]}],"required":true},
+            "views": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "duration": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "duration_seconds": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
+            "year": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "MenuPlaylists": {
+        "dataType": "refObject",
+        "properties": {
+            "shuffleId": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "radioId": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "AlbumResult": {
+        "dataType": "refObject",
+        "properties": {
+            "title": {"dataType":"string","required":true},
+            "album_type": {"ref":"AlbumType","required":true},
+            "thumbnails": {"dataType":"array","array":{"dataType":"refObject","ref":"Thumbnail"},"required":true},
+            "isExplicit": {"dataType":"boolean","required":true},
+            "description": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "trackCount": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "duration": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "audioPlaylistId": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "likeStatus": {"dataType":"union","subSchemas":[{"ref":"LikeStatus"},{"dataType":"enum","enums":[null]}],"required":true},
+            "id": {"dataType":"string","required":true},
+            "tracks": {"dataType":"array","array":{"dataType":"refObject","ref":"PlaylistItem"},"required":true},
+            "other_versions": {"dataType":"union","subSchemas":[{"dataType":"array","array":{"dataType":"refObject","ref":"ParsedAlbum"}},{"dataType":"enum","enums":[null]}],"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "AlbumGetParams": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"language":{"dataType":"string"},"authPath":{"dataType":"string","required":true},"browseId":{"dataType":"string","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "AlbumGetByPlaylistIdParams": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"language":{"dataType":"string"},"authPath":{"dataType":"string","required":true},"playlistId":{"dataType":"string","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "QueueChip": {
+        "dataType": "refObject",
+        "properties": {
+            "title": {"dataType":"string","required":true},
+            "playlistId": {"dataType":"string","required":true},
+            "params": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "QueueTrack": {
+        "dataType": "refObject",
+        "properties": {
+            "artists": {"dataType":"array","array":{"dataType":"refAlias","ref":"SongArtist"},"required":true},
+            "album": {"dataType":"union","subSchemas":[{"ref":"Album"},{"dataType":"enum","enums":[null]}],"required":true},
+            "views": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "duration": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "duration_seconds": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
+            "year": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "videoId": {"dataType":"string","required":true},
+            "title": {"dataType":"string","required":true},
+            "thumbnails": {"dataType":"array","array":{"dataType":"refObject","ref":"Thumbnail"},"required":true},
+            "feedbackTokens": {"dataType":"union","subSchemas":[{"ref":"MenuTokens"},{"dataType":"enum","enums":[null]}],"required":true},
+            "likeStatus": {"dataType":"union","subSchemas":[{"ref":"LikeStatus"},{"dataType":"enum","enums":[null]}],"required":true},
+            "videoType": {"dataType":"union","subSchemas":[{"ref":"VideoType"},{"dataType":"enum","enums":[null]}],"required":true},
+            "isExplicit": {"dataType":"boolean","required":true},
+            "counterpart": {"dataType":"union","subSchemas":[{"ref":"QueueTrack"},{"dataType":"enum","enums":[null]}],"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Queue": {
+        "dataType": "refObject",
+        "properties": {
+            "chips": {"dataType":"array","array":{"dataType":"refObject","ref":"QueueChip"},"required":true},
+            "playlistId": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "playlist": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "tracks": {"dataType":"array","array":{"dataType":"refObject","ref":"QueueTrack"},"required":true},
+            "lyrics": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "related": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "author": {"dataType":"union","subSchemas":[{"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},"name":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true}}},{"dataType":"enum","enums":[null]}],"required":true},
+            "continuation": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "current": {"dataType":"union","subSchemas":[{"dataType":"nestedObjectLiteral","nestedProperties":{"index":{"dataType":"double","required":true},"playlistId":{"dataType":"string","required":true},"videoId":{"dataType":"string","required":true}}},{"dataType":"enum","enums":[null]}],"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "QueueGetParams": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"language":{"dataType":"string"},"radio":{"dataType":"boolean","required":true},"authPath":{"dataType":"string","required":true},"videoId":{"dataType":"string","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "VideoFormat": {
@@ -321,31 +400,6 @@ export function RegisterRoutes(app: Router) {
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
-        app.post('/queue',
-            ...(fetchMiddlewares<RequestHandler>(QueueController)),
-            ...(fetchMiddlewares<RequestHandler>(QueueController.prototype.getQueue)),
-
-            function QueueController_getQueue(request: any, response: any, next: any) {
-            const args = {
-                    body: {"in":"body","name":"body","required":true,"ref":"QueueGetParams"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new QueueController();
-
-
-              const promise = controller.getQueue.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, undefined, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/playlist',
             ...(fetchMiddlewares<RequestHandler>(PlaylistController)),
             ...(fetchMiddlewares<RequestHandler>(PlaylistController.prototype.getPlaylist)),
@@ -365,6 +419,81 @@ export function RegisterRoutes(app: Router) {
 
 
               const promise = controller.getPlaylist.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/album',
+            ...(fetchMiddlewares<RequestHandler>(AlbumController)),
+            ...(fetchMiddlewares<RequestHandler>(AlbumController.prototype.getAlbum)),
+
+            function AlbumController_getAlbum(request: any, response: any, next: any) {
+            const args = {
+                    body: {"in":"body","name":"body","required":true,"ref":"AlbumGetParams"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new AlbumController();
+
+
+              const promise = controller.getAlbum.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/albumByPlaylistId',
+            ...(fetchMiddlewares<RequestHandler>(AlbumByPlaylistIdController)),
+            ...(fetchMiddlewares<RequestHandler>(AlbumByPlaylistIdController.prototype.getAlbumByPlaylistId)),
+
+            function AlbumByPlaylistIdController_getAlbumByPlaylistId(request: any, response: any, next: any) {
+            const args = {
+                    body: {"in":"body","name":"body","required":true,"ref":"AlbumGetByPlaylistIdParams"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new AlbumByPlaylistIdController();
+
+
+              const promise = controller.getAlbumByPlaylistId.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/queue',
+            ...(fetchMiddlewares<RequestHandler>(QueueController)),
+            ...(fetchMiddlewares<RequestHandler>(QueueController.prototype.getQueue)),
+
+            function QueueController_getQueue(request: any, response: any, next: any) {
+            const args = {
+                    body: {"in":"body","name":"body","required":true,"ref":"QueueGetParams"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new QueueController();
+
+
+              const promise = controller.getQueue.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);

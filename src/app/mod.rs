@@ -1,6 +1,7 @@
 mod download_form;
 mod download_playlist;
 mod download_radio;
+mod download_album;
 
 use dioxus::prelude::*;
 
@@ -63,6 +64,7 @@ pub fn App(cx: Scope) -> Element {
             h1 { class: "text-2xl", "Youtube Music Downloader" }
             RadioDownloadForm {}
             PlaylistDownloadForm {}
+            AlbumDownloadForm {}
             option_checkbox!("Overwrite existing files", common_state, overwrite),
             option_checkbox!("Set track number", common_state, set_track_number),
             option_checkbox!("Write youtube id", common_state, write_youtube_id),
