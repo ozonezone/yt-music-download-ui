@@ -9,4 +9,4 @@ services:
       - "./data/downloads:/downloads"
       - "./data/config:/config"
     environment:
-      - HOST=0.0.0.0:3000
+      - HOST=0.0.0.0:3030

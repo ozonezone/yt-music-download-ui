@@ -3,9 +3,7 @@ FROM denoland/deno:latest as base
 
 WORKDIR /build
 RUN deno cache npm:tailwindcss
-COPY ./style ./style
-COPY deno.jsonc .
-COPY deno.lock .
+COPY . .
 RUN deno task css-build
 
 
@@ -24,8 +22,9 @@ RUN cargo build --release
 
 
 # build final image
-FROM denoland/deno:latest
+FROM denoland/deno:alpine
 
+RUN apk add yt-dlp
 COPY --from=build /build/target/x86_64-unknown-linux-musl/release/yt-music-download-ui .
 COPY scripts /scripts
 # COPY deno.lock .
