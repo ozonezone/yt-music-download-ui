@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **thumbnails** | Option<[**Vec<crate::models::Thumbnail>**](Thumbnail.md)> |  | 
 **is_available** | **bool** |  | 
 **is_explicit** | **bool** |  | 
-**video_type** | [**crate::models::VideoType**](VideoType.md) |  | 
+**video_type** | Option<[**crate::models::VideoType**](VideoType.md)> |  | 
 **duration** | Option<**String**> |  | 
 **duration_seconds** | Option<**f64**> |  | 
 **set_video_id** | Option<**String**> |  | 

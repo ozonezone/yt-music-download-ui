@@ -63,15 +63,23 @@ pub fn AlbumDownloadForm(cx: Scope) -> Element {
                     if common_state.read().opts.exclude_video {
                         write_log!(common_state, "Removing video tracks");
                         album.tracks.retain(|track| {
-                            if track.video_type.is_music() {
-                                true
-                            } else {
+                            if let Some(video_type) = &track.video_type {
+                                if video_type.is_music() {
+                                    return true;
+                                }
                                 write_log!(
                                     common_state,
                                     "Removed video track: \"{}\"",
                                     track.title
                                 );
                                 false
+                            } else {
+                                write_log!(
+                                    common_state,
+                                    "[warn] Failed to find video_type but not removed because this can be null with private album: \"{}\"",
+                                    track.title
+                                );
+                                true
                             }
                         });
                     }
@@ -83,7 +91,6 @@ pub fn AlbumDownloadForm(cx: Scope) -> Element {
                         track.thumbnails = album.thumbnails.clone();
                         track.album = Some(album.title.clone());
                         track.artists = album.artists.clone().unwrap_or_default();
-                        
                     });
 
                     let mut opts = { common_state.read().opts };

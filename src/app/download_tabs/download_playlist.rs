@@ -37,7 +37,15 @@ pub fn PlaylistDownloadForm(cx: Scope) -> Element {
                     if common_state.read().opts.exclude_video {
                         write_log!(common_state, "Removing video tracks");
                         playlist.tracks.retain(|track| {
-                            if track.video_type.is_music() {
+                            let Some(video_type) = track.video_type else {
+                                write_log!(
+                                    common_state,
+                                    "Removed video track. No video_type found!: \"{}\"",
+                                    track.title
+                                );
+                                return false;
+                            };
+                            if video_type.is_music() {
                                 true
                             } else {
                                 write_log!(

@@ -24,7 +24,7 @@ impl From<PlaylistItem> for CommonTrack {
             album: track.album.map(|x| x.name),
             thumbnails: track.thumbnails.unwrap_or_default(),
             like_status: Some(track.like_status),
-            video_type: Some(track.video_type),
+            video_type: track.video_type,
             year: None,
         }
     }

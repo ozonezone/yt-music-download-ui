@@ -160,7 +160,12 @@
             "type": "boolean"
           },
           "videoType": {
-            "$ref": "#/components/schemas/VideoType"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VideoType"
+              }
+            ],
+            "nullable": true
           },
           "duration": {
             "type": "string",

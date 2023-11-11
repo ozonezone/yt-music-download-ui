@@ -56,6 +56,15 @@ spec.components.schemas.AlbumResult.properties.artists = {
   },
   "type": "array",
 };
+// For private album, videotype can be null.
+spec.components.schemas.PlaylistItem.properties.videoType = {
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/VideoType",
+    },
+  ],
+  "nullable": true,
+};
 await Deno.writeTextFile(
   "../app/openapi/swagger.json",
   JSON.stringify(spec, null, 2),
