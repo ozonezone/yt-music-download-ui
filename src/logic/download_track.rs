@@ -1,6 +1,6 @@
 use crate::{
     constants::DOWNLOAD_PATH,
-    external::{ytdl::get_video_info, ytmusic::interface::CommonTrack},
+    external::{ytdl::get_video_info, ytmusic::CommonTrack},
     interface::video_id::VideoId,
 };
 use anyhow::{Context, Result};

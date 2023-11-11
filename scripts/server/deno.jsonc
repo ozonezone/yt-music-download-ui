@@ -1,0 +1,10 @@
+{
+  "imports": {
+    "tsoa": "npm:tsoa@6.0.0-rc.4",
+    "@tsoa/runtime": "npm:@tsoa/runtime@6.0.0-rc.2",
+    "express": "npm:express"
+  },
+  "tasks": {
+    "generate": "deno run -A ./generate.ts && deno run -A npm:@openapitools/openapi-generator-cli generate -i ./openapi/swagger.json -g rust -o ../../api"
+  }
+}

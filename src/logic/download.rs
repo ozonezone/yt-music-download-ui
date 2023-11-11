@@ -2,7 +2,7 @@ use anyhow::Context;
 use futures::StreamExt;
 use serde::Deserialize;
 
-use crate::{constants::AUTH_FILE, external::ytmusic::interface::CommonTrack};
+use crate::{constants::AUTH_FILE, external::ytmusic::CommonTrack};
 
 use super::download_track::download_track;
 

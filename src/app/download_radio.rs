@@ -3,7 +3,7 @@ use dioxus::prelude::*;
 
 use crate::{
     app::{macros::write_log, CommonState},
-    external::ytmusic::{interface::VideoType, queue::get_queue},
+    external::ytmusic::queue::get_queue,
     interface::video_id::VideoId,
     logic::download::download_tracks,
 };
@@ -35,9 +35,25 @@ pub fn RadioDownloadForm(cx: Scope) -> Element {
                             .tracks
                             .into_iter()
                             .filter_map(|track| {
-                                if !track.video_type.is_music() {
+                                let Some(video_type) = track.video_type else {
+                                    write_log!(
+                                        common_state,
+                                        "Removed video track. Failed to find video_type!: \"{}\"",
+                                        track.title
+                                    );
+                                    return None;
+                                };
+                                if !video_type.is_music() {
                                     if let Some(counterpart) = track.counterpart {
-                                        if counterpart.video_type.is_music() {
+                                        let Some(video_type) = counterpart.video_type else {
+                                            write_log!(
+                                                common_state,
+                                                "Removed video track. Failed to find video_type!: \"{}\"",
+                                                track.title
+                                            );
+                                            return None;
+                                        };
+                                        if video_type.is_music() {
                                             write_log!(
                                                 common_state,
                                                 "Replaced video track with counterpart: \"{}\"",

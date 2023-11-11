@@ -1,31 +1,23 @@
-use anyhow::Result;
-use tokio::process::Command;
+use openapi::{
+    apis::{default_api::GetPlaylistError, Error},
+    models::{Playlist, PlaylistGetParams},
+};
 
-use crate::{constants::AUTH_FILE, interface::playlist_id::PlaylistId};
+use crate::{
+    constants::{API_CONFIG, AUTH_FILE},
+    interface::playlist_id::PlaylistId,
+};
 
-use super::interface::playlist::Playlist;
-
-pub(crate) async fn get_playlist(playlist: &PlaylistId) -> Result<Playlist> {
-    let output = Command::new("deno")
-        .args([
-            "run",
-            "-A",
-            "./scripts/api/getPlaylist.ts",
-            &playlist.id,
-            &AUTH_FILE,
-        ])
-        .output()
-        .await?;
-    if output.status.success() {
-        let str = String::from_utf8(output.stdout)?;
-        let jd = &mut serde_json::Deserializer::from_str(&str);
-        let json: Playlist = serde_path_to_error::deserialize(jd)?;
-        Ok(json)
-    } else {
-        Err(anyhow::anyhow!(format!(
-            "failed to get playlist info: stdout: {}, stderr: {}",
-            &String::from_utf8(output.stdout)?,
-            &String::from_utf8(output.stderr)?
-        )))
-    }
+/// Get playlist
+pub(crate) async fn get_playlist(
+    playlist_id: &PlaylistId,
+) -> Result<Playlist, Error<GetPlaylistError>> {
+    openapi::apis::default_api::get_playlist(
+        &API_CONFIG,
+        PlaylistGetParams {
+            playlist_id: playlist_id.id.clone(),
+            auth_path: AUTH_FILE.to_string(),
+        },
+    )
+    .await
 }
