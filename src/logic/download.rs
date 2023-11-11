@@ -68,7 +68,7 @@ pub(crate) async fn download_tracks(
         "Track list:\n{}\n└─ ({} tracks)",
         tracks
             .iter()
-            .map(|track| format!("├─ {}", track.title))
+            .map(|track| format!("├─ {}\t({})", track.title, track.video_id))
             .collect::<Vec<String>>()
             .join("\n"),
         len
@@ -101,13 +101,15 @@ pub(crate) async fn download_tracks(
 
             match result {
                 Ok(_) => log(&format!(
-                    "Downloaded: [{}] to [{}]]",
+                    "Downloaded: [{} ({})] to [{}]]",
                     track.title,
+                    track.video_id,
                     path.to_string_lossy()
                 )),
                 Err(e) => log(&format!(
-                    "Failed to download: [{}] to [{}]: {}",
+                    "Failed to download: [{} ({})] to [{}]: {}",
                     track.title,
+                    track.video_id,
                     path.to_string_lossy(),
                     e
                 )),
