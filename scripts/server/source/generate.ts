@@ -43,8 +43,10 @@ spec.components.schemas["VideoType"].enum.push(
   "MUSIC_VIDEO_TYPE_PRIVATELY_OWNED_TRACK",
 );
 spec.components.schemas.Playlist.properties.trackCount = {};
-spec.components.schemas.Queue.properties.current.properties.index.nullable =
-  true;
+spec.components.schemas.Queue.properties.current.required = spec.components
+  .schemas.Queue.properties.current.required.filter((item: string) => {
+    return !(item == "playlistId" || item == "index");
+  });
 await Deno.writeTextFile(
   "../app/openapi/swagger.json",
   JSON.stringify(spec, null, 2),

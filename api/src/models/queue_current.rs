@@ -13,19 +13,19 @@
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct QueueCurrent {
-    #[serde(rename = "index", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "index", skip_serializing_if = "Option::is_none")]
     pub index: Option<f64>,
-    #[serde(rename = "playlistId")]
-    pub playlist_id: String,
+    #[serde(rename = "playlistId", skip_serializing_if = "Option::is_none")]
+    pub playlist_id: Option<String>,
     #[serde(rename = "videoId")]
     pub video_id: String,
 }
 
 impl QueueCurrent {
-    pub fn new(index: Option<f64>, playlist_id: String, video_id: String) -> QueueCurrent {
+    pub fn new(video_id: String) -> QueueCurrent {
         QueueCurrent {
-            index,
-            playlist_id,
+            index: None,
+            playlist_id: None,
             video_id,
         }
     }

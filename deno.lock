@@ -5,6 +5,7 @@
       "npm:@openapitools/openapi-generator-cli": "npm:@openapitools/openapi-generator-cli@2.7.0_@nestjs+common@9.3.11__reflect-metadata@0.1.13__rxjs@7.8.0_reflect-metadata@0.1.13_rxjs@7.8.0",
       "npm:@tsoa/runtime@6.0.0-rc.2": "npm:@tsoa/runtime@6.0.0-rc.2",
       "npm:express": "npm:express@4.18.2",
+      "npm:libmuse": "npm:libmuse@0.0.86",
       "npm:tailwindcss": "npm:tailwindcss@3.3.5_postcss@8.4.31",
       "npm:tsoa@6.0.0-rc.4": "npm:tsoa@6.0.0-rc.4"
     },
@@ -975,6 +976,16 @@
         "dependencies": {
           "graceful-fs": "graceful-fs@4.2.11",
           "universalify": "universalify@2.0.1"
+        }
+      },
+      "jsonpath-plus@7.2.0": {
+        "integrity": "sha512-zBfiUPM5nD0YZSBT/o/fbCUlCcepMIdP0CJZxM1+KgA4f2T206f6VAg9e7mX35+KlMaIc5qXW34f3BnwJ3w+RA==",
+        "dependencies": {}
+      },
+      "libmuse@0.0.86": {
+        "integrity": "sha512-loNs1gtu+rljlYsPI1E/vWQPoq6qOKhYTzQeZpZMZNmrNZwjmCDHcPKj1Qlwl9rD8ImgC3KTFdBH/euFhCnjtg==",
+        "dependencies": {
+          "jsonpath-plus": "jsonpath-plus@7.2.0"
         }
       },
       "lilconfig@2.1.0": {

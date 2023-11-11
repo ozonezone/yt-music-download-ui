@@ -289,8 +289,7 @@
             "properties": {
               "index": {
                 "type": "number",
-                "format": "double",
-                "nullable": true
+                "format": "double"
               },
               "playlistId": {
                 "type": "string"
@@ -300,8 +299,6 @@
               }
             },
             "required": [
-              "index",
-              "playlistId",
               "videoId"
             ],
             "type": "object",

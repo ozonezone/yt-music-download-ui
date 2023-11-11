@@ -11,4 +11,9 @@ pub(crate) static DOWNLOAD_PATH: &str = "./data/downloads";
 #[cfg(not(debug_assertions))]
 pub(crate) static DOWNLOAD_PATH: &str = "/downloads";
 
-pub(crate) static API_CONFIG: Lazy<Configuration> = Lazy::new(Configuration::new);
+pub(crate) static DENO_SERVER_PORT: &str = "3031";
+
+pub(crate) static API_CONFIG: Lazy<Configuration> = Lazy::new(|| Configuration {
+    base_path: format!("http://localhost:{}", DENO_SERVER_PORT),
+    ..Default::default()
+});

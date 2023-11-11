@@ -7,7 +7,7 @@
     "css-build": "cd style && deno run -A npm:tailwindcss -i index.css -o ./dist/index.css",
     "css-build-watch": "cd style && deno run -A npm:tailwindcss -i index.css -o ./dist/index.css --watch",
     "app-run": "export HOST=\"0.0.0.0:3030\" && cargo run",
-    "app-run-watch": "export HOST=\"0.0.0.0:3030\" && cargo watch -w src -x run",
+    "app-run-watch": "export HOST=\"0.0.0.0:3030\" && cargo watch -w src -w api -x run",
     "auth": "deno run -A ./scripts/auth.ts ./data/config/auth.json",
     "docker-build": "docker compose build",
     "generate": "cd ./scripts/server/source && deno run -A ./generate.ts"
