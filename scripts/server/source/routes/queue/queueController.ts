@@ -5,6 +5,7 @@ export type QueueGetParams = {
   videoId: string;
   authPath: string;
   radio: boolean;
+  language?: string;
 };
 
 @Route("queue")
@@ -15,6 +16,7 @@ export class QueueController extends Controller {
   ): Promise<Queue> {
     setup({
       store: new DenoFileStore(body.authPath),
+      language: body.language,
     });
     return await get_queue(body.videoId, null, { radio: body.radio });
   }

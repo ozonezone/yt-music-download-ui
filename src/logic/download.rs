@@ -2,7 +2,7 @@ use anyhow::Context;
 use futures::StreamExt;
 use serde::Deserialize;
 
-use crate::{constants::AUTH_FILE, external::ytmusic::CommonTrack};
+use crate::{config::CONFIG, external::ytmusic::CommonTrack};
 
 use super::download_track::download_track;
 
@@ -39,9 +39,10 @@ pub(crate) async fn download_tracks(
         };
         futures.push(async move {
             let result = async {
-                let auth_str = tokio::fs::read_to_string(&AUTH_FILE)
-                    .await
-                    .context("Failed to load auth file")?;
+                let auth_str =
+                    tokio::fs::read_to_string(&format!("{}/auth.json", CONFIG.config_path))
+                        .await
+                        .context("Failed to load auth file")?;
                 let auth: Auth = serde_json::from_str(&auth_str)?;
                 let result: anyhow::Result<()> = download_track(
                     &track,

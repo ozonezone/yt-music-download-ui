@@ -3,11 +3,11 @@ use std::env;
 use anyhow::Result;
 use axum::{extract::WebSocketUpgrade, response::Html, routing::get, Router};
 
-use crate::constants::DENO_SERVER_PORT;
+use crate::config::CONFIG;
 
 #[allow(non_snake_case)]
 mod app;
-mod constants;
+mod config;
 mod external;
 mod interface;
 mod logic;
@@ -21,7 +21,12 @@ async fn main() -> Result<()> {
 
     tokio::spawn(async {
         let _ = tokio::process::Command::new("deno")
-            .args(["run", "-A", "./scripts/server/app/app.ts", DENO_SERVER_PORT])
+            .args([
+                "run",
+                "-A",
+                "./scripts/server/app/app.ts",
+                CONFIG.deno_server_port,
+            ])
             .spawn()
             .expect("Failed to start deno server")
             .wait()

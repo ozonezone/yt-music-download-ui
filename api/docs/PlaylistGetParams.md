@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**language** | Option<**String**> |  | [optional]
 **auth_path** | **String** |  | 
 **playlist_id** | **String** |  | 
 

@@ -1,5 +1,5 @@
 use crate::{
-    constants::DOWNLOAD_PATH,
+    config::CONFIG,
     external::{ytdl::get_video_info, ytmusic::CommonTrack},
     interface::video_id::VideoId,
 };
@@ -54,7 +54,8 @@ pub(crate) async fn download_track(
     };
 
     let path_str = format!(
-        "./{DOWNLOAD_PATH}/{}/{}/{}.m4a",
+        "./{}/{}/{}/{}.m4a",
+        CONFIG.download_path,
         sanitize(&artist),
         sanitize(&album),
         sanitize(&track.title)

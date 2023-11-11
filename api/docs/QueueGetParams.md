@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**language** | Option<**String**> |  | [optional]
 **radio** | **bool** |  | 
 **auth_path** | **String** |  | 
 **video_id** | **String** |  | 

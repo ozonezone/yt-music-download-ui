@@ -13,6 +13,8 @@
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct PlaylistGetParams {
+    #[serde(rename = "language", skip_serializing_if = "Option::is_none")]
+    pub language: Option<String>,
     #[serde(rename = "authPath")]
     pub auth_path: String,
     #[serde(rename = "playlistId")]
@@ -22,6 +24,7 @@ pub struct PlaylistGetParams {
 impl PlaylistGetParams {
     pub fn new(auth_path: String, playlist_id: String) -> PlaylistGetParams {
         PlaylistGetParams {
+            language: None,
             auth_path,
             playlist_id,
         }

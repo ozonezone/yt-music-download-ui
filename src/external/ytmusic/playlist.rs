@@ -4,7 +4,7 @@ use openapi::{
 };
 
 use crate::{
-    constants::{API_CONFIG, AUTH_FILE},
+    config::{API_CONFIG, CONFIG},
     interface::playlist_id::PlaylistId,
 };
 
@@ -16,7 +16,8 @@ pub(crate) async fn get_playlist(
         &API_CONFIG,
         PlaylistGetParams {
             playlist_id: playlist_id.id.clone(),
-            auth_path: AUTH_FILE.to_string(),
+            auth_path: format!("{}/auth.json", CONFIG.config_path),
+            language: CONFIG.language.map(|s| s.to_string()),
         },
     )
     .await

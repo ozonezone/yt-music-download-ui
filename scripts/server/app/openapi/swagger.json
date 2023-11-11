@@ -321,6 +321,9 @@
       },
       "QueueGetParams": {
         "properties": {
+          "language": {
+            "type": "string"
+          },
           "radio": {
             "type": "boolean"
           },
@@ -632,6 +635,9 @@
       },
       "PlaylistGetParams": {
         "properties": {
+          "language": {
+            "type": "string"
+          },
           "authPath": {
             "type": "string"
           },

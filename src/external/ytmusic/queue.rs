@@ -4,7 +4,7 @@ use openapi::{
 };
 
 use crate::{
-    constants::{API_CONFIG, AUTH_FILE},
+    config::{API_CONFIG, CONFIG},
     interface::video_id::VideoId,
 };
 
@@ -18,7 +18,8 @@ pub(crate) async fn get_queue(
         QueueGetParams {
             video_id: video_id.id.clone(),
             radio,
-            auth_path: AUTH_FILE.to_string(),
+            auth_path: format!("{}/auth.json", CONFIG.config_path),
+            language: CONFIG.language.map(|s| s.to_string()),
         },
     )
     .await
