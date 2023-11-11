@@ -12,12 +12,12 @@ pub(crate) struct YtdlVideoInfo {
     // pub track: Option<String>,
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Debug)]
 pub(crate) struct YtdlVideoInfoFormat {
     /// 140 is m4a, 128kbps. 141 is m4a, 256kbps which is avilable on only premium account.
     pub format_id: String,
     pub url: String,
-    pub acodec: String,
+    pub acodec: Option<String>,
     // pub vcodec: String,
 }
 
@@ -26,7 +26,10 @@ impl YtdlVideoInfo {
     pub fn get_best_audio(&self) -> Option<YtdlVideoInfoFormat> {
         let mut best_audio: Option<YtdlVideoInfoFormat> = None;
         for format in &self.formats {
-            if format.acodec == "none" {
+            let Some(acodec) = &format.acodec else {
+                continue;
+            };
+            if acodec == "none" {
                 continue;
             }
             /*if format.format_id == "140" {
