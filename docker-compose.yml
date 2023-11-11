@@ -10,3 +10,4 @@ services:
       - "./data/config:/config"
     environment:
       - HOST=0.0.0.0:3030
+      - RUST_BACKTRACE=1

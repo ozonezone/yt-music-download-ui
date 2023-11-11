@@ -2,3 +2,4 @@
 /data
 /style/dist
 .env
+deno.lock

@@ -16,6 +16,16 @@ async fn main() -> Result<()> {
         .expect("Env 'HOST' not found")
         .parse()
         .expect("Invalid 'HOST' env");
+
+    tokio::spawn(async {
+        let _ = tokio::process::Command::new("deno")
+            .args(["run", "-A", "./scripts/app.ts"])
+            .spawn()
+            .expect("Failed to start deno server")
+            .wait()
+            .await;
+    });
+
     let view = dioxus_liveview::LiveViewPool::new();
 
     let app = Router::new()

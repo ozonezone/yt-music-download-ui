@@ -15,5 +15,5 @@ RegisterRoutes(app);
 
 app.listen(
   port,
-  () => console.log(`Example app listening at http://localhost:${port}`),
+  () => console.log(`Deno server listening at http://localhost:${port}`),
 );
