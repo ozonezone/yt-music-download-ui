@@ -150,7 +150,8 @@
             "items": {
               "$ref": "#/components/schemas/Thumbnail"
             },
-            "type": "array"
+            "type": "array",
+            "nullable": true
           },
           "isAvailable": {
             "type": "boolean"
@@ -417,12 +418,7 @@
         "type": "object"
       },
       "AlbumType": {
-        "type": "string",
-        "enum": [
-          "album",
-          "single",
-          "ep"
-        ]
+        "type": "string"
       },
       "ParsedAlbum": {
         "properties": {
@@ -622,6 +618,12 @@
             },
             "type": "array",
             "nullable": true
+          },
+          "artists": {
+            "items": {
+              "$ref": "#/components/schemas/ArtistRun"
+            },
+            "type": "array"
           }
         },
         "required": [

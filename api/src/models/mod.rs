@@ -6,8 +6,6 @@ pub mod album_get_params;
 pub use self::album_get_params::AlbumGetParams;
 pub mod album_result;
 pub use self::album_result::AlbumResult;
-pub mod album_type;
-pub use self::album_type::AlbumType;
 pub mod artist_run;
 pub use self::artist_run::ArtistRun;
 pub mod audio_format;

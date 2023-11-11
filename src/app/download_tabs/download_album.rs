@@ -1,34 +1,37 @@
 use anyhow::Result;
 use dioxus::prelude::*;
 use openapi::{
-    apis::default_api::get_album_by_playlist_id,
-    models::{Album, AlbumGetByPlaylistIdParams},
+    apis::default_api::{get_album, get_album_by_playlist_id},
+    models::{AlbumGetByPlaylistIdParams, AlbumGetParams, AlbumResult},
 };
 
 use crate::{
     app::{macros::write_log, CommonState},
     config::API_CONFIG,
-    interface::{
-        browse_id::{self, BrowseId},
-        playlist_id::PlaylistId,
-        video_id::VideoId,
-    },
+    external::ytmusic::CommonTrack,
+    interface::{browse_id::BrowseId, playlist_id::PlaylistId},
     logic::download::download_tracks,
 };
 
 use super::download_form::DownloadForm;
 
-async fn get_album(ambiguous_str: String) -> Result<Album> {
-    if let Ok(playlist_id) = PlaylistId::from_url(&ambiguous_str) {
-        return get_album_by_playlist_id(
+async fn fetch_album(ambiguous_str: String) -> Result<AlbumResult> {
+    let album = if let Ok(playlist_id) = PlaylistId::from_url(&ambiguous_str) {
+        get_album_by_playlist_id(
             &API_CONFIG,
             AlbumGetByPlaylistIdParams {
                 playlist_id: playlist_id.id,
             },
         )
-        .await;
-    } else if Ok(browse_id) = BrowseId::from_url(&ambiguous_str) {
-        return get_album(browse_id.id).await;
+        .await?
+    } else if let Ok(browse_id) = BrowseId::from_url(&ambiguous_str) {
+        get_album(
+            &API_CONFIG,
+            AlbumGetParams {
+                browse_id: browse_id.id,
+            },
+        )
+        .await?
     } else {
         get_album_by_playlist_id(
             &API_CONFIG,
@@ -36,8 +39,9 @@ async fn get_album(ambiguous_str: String) -> Result<Album> {
                 playlist_id: ambiguous_str,
             },
         )
-        .await
-    }
+        .await?
+    };
+    Ok(album)
 }
 
 #[allow(clippy::redundant_closure_call)]
@@ -45,7 +49,7 @@ async fn get_album(ambiguous_str: String) -> Result<Album> {
 pub fn AlbumDownloadForm(cx: Scope) -> Element {
     let common_state = use_shared_state::<CommonState>(cx).unwrap();
 
-    let download = move |url: String| {
+    let download = move |input: String| {
         common_state.with_mut(|state| {
             state.downloading = true;
         });
@@ -53,8 +57,8 @@ pub fn AlbumDownloadForm(cx: Scope) -> Element {
             to_owned![common_state];
             async move {
                 let res = async {
-                    write_log!(common_state, "Fetching album: {}", url);
-                    let mut album = get_playlist(&playlist_id).await?;
+                    write_log!(common_state, "Fetching album: {}", input);
+                    let mut album = fetch_album(input).await?;
 
                     if common_state.read().opts.exclude_video {
                         write_log!(common_state, "Removing video tracks");
@@ -84,8 +88,20 @@ pub fn AlbumDownloadForm(cx: Scope) -> Element {
                             .join(""),
                         tracks_len
                     );
-                    let opts = { common_state.read().opts };
-                    download_tracks(album.tracks, opts, |track, res| match res {
+                    let mut tracks: Vec<CommonTrack> =
+                        album.tracks.into_iter().map(|track| track.into()).collect();
+                    // Use album info for tracks
+                    tracks.iter_mut().for_each(|track| {
+                        track.thumbnails = album.thumbnails.clone();
+                        track.album = Some(album.title.clone());
+                        track.artists = album.artists.clone().unwrap_or_default();
+                        
+                    });
+
+                    let mut opts = { common_state.read().opts };
+                    // Always set track number for albums
+                    opts.set_track_number = true;
+                    download_tracks(tracks, opts, |track, res| match res {
                         Ok(_) => {
                             write_log!(common_state, "Downloaded: \"{}\"", track.title)
                         }

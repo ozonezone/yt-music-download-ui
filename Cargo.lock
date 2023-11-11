@@ -2301,6 +2301,7 @@ dependencies = [
  "mp4ameta",
  "once_cell",
  "openapi",
+ "regex",
  "reqwest",
  "sanitize-filename",
  "serde",

@@ -47,6 +47,15 @@ spec.components.schemas.Queue.properties.current.required = spec.components
   .schemas.Queue.properties.current.required.filter((item: string) => {
     return !(item == "playlistId" || item == "index");
   });
+// If language is not endlish, this string is localized
+delete spec.components.schemas.AlbumType.enum;
+spec.components.schemas.PlaylistItem.properties.thumbnails.nullable = true;
+spec.components.schemas.AlbumResult.properties.artists = {
+  "items": {
+    "$ref": "#/components/schemas/ArtistRun",
+  },
+  "type": "array",
+};
 await Deno.writeTextFile(
   "../app/openapi/swagger.json",
   JSON.stringify(spec, null, 2),

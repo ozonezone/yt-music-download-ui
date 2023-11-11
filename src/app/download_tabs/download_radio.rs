@@ -86,7 +86,7 @@ pub fn RadioDownloadForm(cx: Scope) -> Element {
 
                     if common_state.read().opts.exclude_video {
                         write_log!(common_state, "Removing video tracks");
-                        radio.tracks = process_invalid_tracks(radio.tracks, common_state);
+                        radio.tracks = process_invalid_tracks(radio.tracks, common_state.clone());
                     }
 
                     let tracks_len = radio.tracks.len();

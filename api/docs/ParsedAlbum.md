@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **audio_playlist_id** | **String** |  | 
 **thumbnails** | [**Vec<crate::models::Thumbnail>**](Thumbnail.md) |  | 
 **is_explicit** | **bool** |  | 
-**album_type** | Option<[**crate::models::AlbumType**](AlbumType.md)> |  | 
+**album_type** | Option<**String**> |  | 
 **artists** | [**Vec<crate::models::ArtistRun>**](ArtistRun.md) |  | 
 **library_like_status** | Option<[**crate::models::LikeStatus**](LikeStatus.md)> |  | 
 

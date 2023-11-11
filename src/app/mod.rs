@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use crate::{logic::download::CommonOpts, app::download_tabs::DownloadTabs};
+use crate::{app::download_tabs::DownloadTabs, logic::download::CommonOpts};
 
 mod download_tabs;
 
@@ -54,33 +54,35 @@ pub fn App(cx: Scope) -> Element {
     let common_state = use_shared_state::<CommonState>(cx).unwrap();
 
     cx.render(rsx! {
-        fieldset { class: "w-full flex flex-col gap-2 p-1", "disabled": common_state.read().downloading,
-            h1 { class: "text-2xl", "Youtube Music Downloader" }
-            DownloadTabs {}
-            option_checkbox!("Overwrite existing files", common_state, overwrite),
-            option_checkbox!("Set track number", common_state, set_track_number),
-            option_checkbox!("Write youtube id", common_state, write_youtube_id),
-            option_checkbox!(
-                "Exclude video (if counterpart audio exists, it will be downloaded)", 
-                common_state, 
-                exclude_video
-            ),
-            div { class: "border border-red-400 rounded-md p-2 flex flex-col gap-2",
-                h3 { class: "text-xl", "Logs" }
-                button {
-                    class: "bg-gray-200 hover:bg-gray-300 rounded-md p-2",
-                    onclick: move |_| {
-                        common_state.with_mut(|state| state.logs.clear());
-                    },
-                    "Clear logs"
-                }
-                pre { class: "text-white bg-black font-mono p-1 overflow-auto",
-                    code {
-                        common_state.read().logs.iter().rev().map(|log| rsx!(
-                            div {
-                                "{log}"
-                            }
-                        ))
+        fieldset { "disabled": common_state.read().downloading,
+            div { class: "flex flex-col gap-2 w-[100vw]",
+                h1 { class: "text-2xl", "Youtube Music Downloader" }
+                DownloadTabs {}
+                option_checkbox!("Overwrite existing files", common_state, overwrite),
+                option_checkbox!("Set track number", common_state, set_track_number),
+                option_checkbox!("Write youtube id", common_state, write_youtube_id),
+                option_checkbox!(
+                    "Exclude video (if counterpart audio exists, it will be downloaded)",
+                    common_state,
+                    exclude_video
+                ),
+                div { class: "border border-red-400 rounded-md p-2 flex flex-col gap-2",
+                    h3 { class: "text-xl", "Logs" }
+                    button {
+                        class: "bg-gray-200 hover:bg-gray-300 rounded-md p-2",
+                        onclick: move |_| {
+                            common_state.with_mut(|state| state.logs.clear());
+                        },
+                        "Clear logs"
+                    }
+                    pre { class: "text-white bg-black font-mono p-1 overflow-auto",
+                        code {
+                            common_state.read().logs.iter().rev().map(|log| rsx!(
+                                div {
+                                    "{log}"
+                                }
+                            ))
+                        }
                     }
                 }
             }

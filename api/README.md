@@ -38,7 +38,6 @@ Class | Method | HTTP request | Description
  - [AlbumGetByPlaylistIdParams](docs/AlbumGetByPlaylistIdParams.md)
  - [AlbumGetParams](docs/AlbumGetParams.md)
  - [AlbumResult](docs/AlbumResult.md)
- - [AlbumType](docs/AlbumType.md)
  - [ArtistRun](docs/ArtistRun.md)
  - [AudioFormat](docs/AudioFormat.md)
  - [Caption](docs/Caption.md)

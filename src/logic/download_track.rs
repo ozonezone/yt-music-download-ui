@@ -35,16 +35,16 @@ pub(crate) async fn download_track(
     let album = track.album.clone().context("No album found")?;
     let artist = track
         .artists
-        .first()
-        .context("No artist found")?
-        .name
-        .clone();
+        .iter()
+        .map(|x| x.name.clone())
+        .collect::<Vec<_>>()
+        .join(", ");
 
     let path_str = format!(
         "./{}/{}/{}/{}.m4a",
         CONFIG.download_path,
         sanitize(&artist),
-        sanitize(&album.name),
+        sanitize(&album),
         sanitize(&track.title)
     );
     let path = std::path::Path::new(&path_str);
@@ -85,7 +85,7 @@ pub(crate) async fn download_track(
         };
         let mut tag = mp4ameta::Tag::read_from_path(path)?;
         tag.set_artist(&artist);
-        tag.set_album(&album.name);
+        tag.set_album(&album);
         tag.set_title(&track.title);
         tag.set_artwork(tag_img);
         if let Some(year) = &track.year {

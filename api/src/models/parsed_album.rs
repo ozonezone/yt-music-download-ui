@@ -32,7 +32,7 @@ pub struct ParsedAlbum {
     #[serde(rename = "isExplicit")]
     pub is_explicit: bool,
     #[serde(rename = "album_type", deserialize_with = "Option::deserialize")]
-    pub album_type: Option<crate::models::AlbumType>,
+    pub album_type: Option<String>,
     #[serde(rename = "artists")]
     pub artists: Vec<crate::models::ArtistRun>,
     #[serde(rename = "libraryLikeStatus", deserialize_with = "Option::deserialize")]
@@ -40,7 +40,7 @@ pub struct ParsedAlbum {
 }
 
 impl ParsedAlbum {
-    pub fn new(shuffle_id: Option<String>, radio_id: Option<String>, r#type: Type, title: String, year: Option<String>, browse_id: String, audio_playlist_id: String, thumbnails: Vec<crate::models::Thumbnail>, is_explicit: bool, album_type: Option<crate::models::AlbumType>, artists: Vec<crate::models::ArtistRun>, library_like_status: Option<crate::models::LikeStatus>) -> ParsedAlbum {
+    pub fn new(shuffle_id: Option<String>, radio_id: Option<String>, r#type: Type, title: String, year: Option<String>, browse_id: String, audio_playlist_id: String, thumbnails: Vec<crate::models::Thumbnail>, is_explicit: bool, album_type: Option<String>, artists: Vec<crate::models::ArtistRun>, library_like_status: Option<crate::models::LikeStatus>) -> ParsedAlbum {
         ParsedAlbum {
             shuffle_id,
             radio_id,

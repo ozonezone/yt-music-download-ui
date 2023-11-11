@@ -15,12 +15,13 @@ async fn main() -> Result<()> {
     let addr: std::net::SocketAddr = CONFIG.host.parse().expect("Invalid 'HOST' env");
 
     tokio::spawn(async {
+        let auth = format!("{}/auth.json", CONFIG.config_path);
         let mut args = vec![
             "run",
             "-A",
             "./scripts/server/app/app.ts",
             CONFIG.deno_server_port,
-            &format!("{}/auth.json", CONFIG.config_path),
+            &auth,
         ];
         if let Some(lang) = CONFIG.language {
             args.push(lang);
@@ -51,6 +52,7 @@ async fn main() -> Result<()> {
                 <html>
                 <head> 
                   <title>Youtube Music Downloader</title>  
+                  <meta name="viewport" content="width=device-width,initial-scale=1">
                   {style}
                 </head>
                 <body> <div id="main"></div> </body>

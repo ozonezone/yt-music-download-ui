@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **title** | **String** |  | 
-**album_type** | [**crate::models::AlbumType**](AlbumType.md) |  | 
+**album_type** | **String** |  | 
 **thumbnails** | [**Vec<crate::models::Thumbnail>**](Thumbnail.md) |  | 
 **is_explicit** | **bool** |  | 
 **description** | Option<**String**> |  | 
@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **id** | **String** |  | 
 **tracks** | [**Vec<crate::models::PlaylistItem>**](PlaylistItem.md) |  | 
 **other_versions** | Option<[**Vec<crate::models::ParsedAlbum>**](ParsedAlbum.md)> |  | 
+**artists** | Option<[**Vec<crate::models::ArtistRun>**](ArtistRun.md)> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

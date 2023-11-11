@@ -16,7 +16,7 @@ pub struct AlbumResult {
     #[serde(rename = "title")]
     pub title: String,
     #[serde(rename = "album_type")]
-    pub album_type: crate::models::AlbumType,
+    pub album_type: String,
     #[serde(rename = "thumbnails")]
     pub thumbnails: Vec<crate::models::Thumbnail>,
     #[serde(rename = "isExplicit")]
@@ -37,10 +37,12 @@ pub struct AlbumResult {
     pub tracks: Vec<crate::models::PlaylistItem>,
     #[serde(rename = "other_versions", deserialize_with = "Option::deserialize")]
     pub other_versions: Option<Vec<crate::models::ParsedAlbum>>,
+    #[serde(rename = "artists", skip_serializing_if = "Option::is_none")]
+    pub artists: Option<Vec<crate::models::ArtistRun>>,
 }
 
 impl AlbumResult {
-    pub fn new(title: String, album_type: crate::models::AlbumType, thumbnails: Vec<crate::models::Thumbnail>, is_explicit: bool, description: Option<String>, track_count: Option<String>, duration: Option<String>, audio_playlist_id: Option<String>, like_status: Option<crate::models::LikeStatus>, id: String, tracks: Vec<crate::models::PlaylistItem>, other_versions: Option<Vec<crate::models::ParsedAlbum>>) -> AlbumResult {
+    pub fn new(title: String, album_type: String, thumbnails: Vec<crate::models::Thumbnail>, is_explicit: bool, description: Option<String>, track_count: Option<String>, duration: Option<String>, audio_playlist_id: Option<String>, like_status: Option<crate::models::LikeStatus>, id: String, tracks: Vec<crate::models::PlaylistItem>, other_versions: Option<Vec<crate::models::ParsedAlbum>>) -> AlbumResult {
         AlbumResult {
             title,
             album_type,
@@ -54,6 +56,7 @@ impl AlbumResult {
             id,
             tracks,
             other_versions,
+            artists: None,
         }
     }
 }

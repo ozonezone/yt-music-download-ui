@@ -6,7 +6,6 @@ docs/Album.md
 docs/AlbumGetByPlaylistIdParams.md
 docs/AlbumGetParams.md
 docs/AlbumResult.md
-docs/AlbumType.md
 docs/ArtistRun.md
 docs/AudioFormat.md
 docs/Caption.md
@@ -44,7 +43,6 @@ src/models/album.rs
 src/models/album_get_by_playlist_id_params.rs
 src/models/album_get_params.rs
 src/models/album_result.rs
-src/models/album_type.rs
 src/models/artist_run.rs
 src/models/audio_format.rs
 src/models/caption.rs
