@@ -34,6 +34,6 @@ COPY --from=builder /volume/target/x86_64-unknown-linux-musl/release/yt-music-do
 COPY scripts /scripts
 COPY deno.jsonc .
 COPY import_map.json .
-RUN deno cache --no-lock ./scripts/server/app/app.ts
+RUN deno cache ./scripts/server/app/app.ts
 
 ENTRYPOINT [ "/yt-music-download-ui" ]

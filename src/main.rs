@@ -74,10 +74,17 @@ async fn main() -> Result<()> {
 
     println!("Listening on {addr}");
 
-    axum::Server::bind(&addr.to_string().parse().unwrap())
-        .serve(app.into_make_service())
-        .await
-        .unwrap();
+    let mut sigterm =
+        tokio::signal::unix::signal(tokio::signal::unix::SignalKind::terminate()).unwrap();
+
+    let server_ =
+        axum::Server::bind(&addr.to_string().parse().unwrap()).serve(app.into_make_service());
+
+    tokio::select! {
+        _ = server_ => {},
+        _ = sigterm.recv() => {},
+
+    }
 
     Ok(())
 }

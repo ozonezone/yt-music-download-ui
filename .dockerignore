@@ -3,3 +3,4 @@
 /style/dist
 .env
 deno.lock
+node_modules
