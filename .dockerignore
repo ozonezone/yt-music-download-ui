@@ -1,6 +1,6 @@
 /target
 /data
 /style/dist
-.env
+**/.env
 deno.lock
-node_modules
+**/node_modules
