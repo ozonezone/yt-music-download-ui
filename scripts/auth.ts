@@ -1,5 +1,5 @@
 import { dirname } from "https://deno.land/std@0.181.0/path/mod.ts";
-import { DenoFileStore, get_option, setup } from "./muse/mod.ts";
+import { DenoFileStore, get_option, setup } from "libmuse";
 
 const storePath = Deno.args[0];
 
