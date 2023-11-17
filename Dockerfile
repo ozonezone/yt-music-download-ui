@@ -30,10 +30,10 @@ RUN cargo build --release --target x86_64-unknown-linux-musl
 FROM denoland/deno:alpine
 
 RUN apk add yt-dlp
-COPY --from=builder /volume/target/x86_64-unknown-linux-musl/release/yt-music-download-ui .
 COPY scripts /scripts
 COPY deno.jsonc .
 COPY import_map.json .
 RUN deno cache ./scripts/server/app/app.ts
+COPY --from=builder /volume/target/x86_64-unknown-linux-musl/release/yt-music-download-ui .
 
 ENTRYPOINT [ "/yt-music-download-ui" ]
