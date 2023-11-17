@@ -1,14 +1,10 @@
 use crate::{
-    external::{ytdl::get_video_info, ytmusic::CommonTrack},
+    external::{ytdl::download_video, ytmusic::CommonTrack},
     interface::video_id::VideoId,
 };
 use anyhow::{Context, Result};
-use futures::StreamExt;
 use mp4ameta::{Data, FreeformIdent};
-use std::{
-    io::{Seek, Write},
-    path::Path,
-};
+use std::path::Path;
 
 pub struct DownloadOpts {
     pub track_number: Option<(u16, u16)>,
@@ -30,22 +26,11 @@ pub(crate) async fn download_track(
     let path = std::path::Path::new(&path);
 
     if !path.exists() || opts.overwrite {
-        let mut temp_file = tempfile::NamedTempFile::new()?;
-        let info = get_video_info(&video_id, access_token).await?;
-        let best_audio = info.get_best_audio().context("no audio found.")?;
+        let temp_file = tempfile::Builder::new().suffix(".m4a").tempfile()?;
+        let ytdl_result = download_video(&video_id, access_token, &temp_file).await?;
+        println!("{}", ytdl_result);
 
         let client = reqwest::Client::new();
-        let mut req = client.get(best_audio.url);
-        if let Some(token) = access_token {
-            req = req.header(reqwest::header::AUTHORIZATION, format!("Bearer {}", token));
-        }
-        let mut stream = req.send().await?.bytes_stream();
-        while let Some(chunk_result) = stream.next().await {
-            let chunk = chunk_result?;
-            temp_file.write_all(&chunk)?;
-        }
-        temp_file.flush()?;
-
         let thumb_res = client.get(&thumbnail.url).send().await?;
         let thumb_type = thumb_res
             .headers()

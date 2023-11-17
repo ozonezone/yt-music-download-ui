@@ -1,4 +1,6 @@
-use anyhow::Result;
+use std::path::Path;
+
+use anyhow::{Context, Result};
 use serde::Deserialize;
 use tokio::process::Command;
 
@@ -63,6 +65,40 @@ pub(crate) async fn get_video_info(
     if output.status.success() {
         let json: YtdlVideoInfo = serde_json::from_str(&String::from_utf8(output.stdout)?)?;
         Ok(json)
+    } else {
+        let stderr = std::str::from_utf8(&output.stderr);
+        Err(anyhow::anyhow!("failed to get video info: {:?}", stderr))
+    }
+}
+
+/// Download song
+pub(crate) async fn download_video(
+    video_id: &VideoId,
+    access_token: &Option<String>,
+    output_file: impl AsRef<Path>,
+) -> Result<String> {
+    let video_url = video_id.to_url();
+    let output_file = output_file.as_ref().to_str().context("Invalid path")?;
+    let mut args = vec![
+        &video_url,
+        "-f",
+        "bestaudio",
+        "-o",
+        output_file,
+        "--verbose",
+        "--force-overwrites",
+    ];
+    let output = if let Some(access_token) = access_token {
+        args.push("--add-headers");
+        let auth = format!("Authorization: Bearer {}", access_token);
+        args.push(&auth);
+        Command::new("yt-dlp").args(args).output().await?
+    } else {
+        Command::new("yt-dlp").args(args).output().await?
+    };
+
+    if output.status.success() {
+        Ok(String::from_utf8(output.stdout)?)
     } else {
         let stderr = std::str::from_utf8(&output.stderr);
         Err(anyhow::anyhow!("failed to get video info: {:?}", stderr))
