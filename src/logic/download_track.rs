@@ -5,7 +5,10 @@ use crate::{
 use anyhow::{Context, Result};
 use futures::StreamExt;
 use mp4ameta::{Data, FreeformIdent};
-use std::{io::Write, path::Path};
+use std::{
+    io::{Seek, Write},
+    path::Path,
+};
 
 pub struct DownloadOpts {
     pub track_number: Option<(u16, u16)>,
@@ -27,12 +30,9 @@ pub(crate) async fn download_track(
     let path = std::path::Path::new(&path);
 
     if !path.exists() || opts.overwrite {
+        let mut temp_file = tempfile::NamedTempFile::new()?;
         let info = get_video_info(&video_id, access_token).await?;
         let best_audio = info.get_best_audio().context("no audio found.")?;
-
-        tokio::fs::create_dir_all(path.parent().expect("what")).await?;
-
-        let mut file = std::fs::File::create(path)?;
 
         let client = reqwest::Client::new();
         let mut req = client.get(best_audio.url);
@@ -42,9 +42,9 @@ pub(crate) async fn download_track(
         let mut stream = req.send().await?.bytes_stream();
         while let Some(chunk_result) = stream.next().await {
             let chunk = chunk_result?;
-            file.write_all(&chunk)?;
+            temp_file.write_all(&chunk)?;
         }
-        file.flush()?;
+        temp_file.flush()?;
 
         let thumb_res = client.get(&thumbnail.url).send().await?;
         let thumb_type = thumb_res
@@ -60,7 +60,7 @@ pub(crate) async fn download_track(
         } else {
             mp4ameta::Img::png(thumb_bin.to_vec())
         };
-        let mut tag = mp4ameta::Tag::read_from_path(path)?;
+        let mut tag = mp4ameta::Tag::read_from_path(&temp_file)?;
 
         let album = track.album.as_ref().context("No album found")?;
         let artist = track
@@ -85,7 +85,10 @@ pub(crate) async fn download_track(
                 Data::Utf8(track.video_id.clone()),
             );
         }
-        tag.write_to_path(path).unwrap();
+        tag.write_to_path(&temp_file)?;
+
+        tokio::fs::create_dir_all(path.parent().expect("what")).await?;
+        tokio::fs::copy(&temp_file, path).await?;
     } else {
         return Err(anyhow::anyhow!("Skipped. File already exists."));
     }

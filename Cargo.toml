@@ -30,6 +30,7 @@ serde_path_to_error = "0.1.14"
 openapi = { path = "./api" }
 url = "2.4.1"
 regex = "1.10.2"
+tempfile = "3.8.1"
 
 [workspace]
 members = ["api"]
