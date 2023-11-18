@@ -85,7 +85,7 @@ pub fn AlbumDownloadForm(cx: Scope) -> Element {
                     }
 
                     let mut tracks: Vec<CommonTrack> =
-                        album.tracks.into_iter().map(|track| track.into()).collect();
+                        album.tracks.into_iter().flat_map(|track| track.try_into()).collect();
                     // Use album info for tracks
                     tracks.iter_mut().for_each(|track| {
                         track.thumbnails = album.thumbnails.clone();

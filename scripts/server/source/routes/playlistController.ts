@@ -1,5 +1,5 @@
 import { Body, Controller, Post, Route } from "tsoa";
-import { get_playlist, Playlist } from "libmuse";
+import { get_playlist, Playlist } from "../muse/mod.ts";
 
 export type PlaylistGetParams = {
   playlistId: string;

@@ -90,8 +90,12 @@ pub fn RadioDownloadForm(cx: Scope) -> Element {
                     }
 
                     let opts = { common_state.read().opts };
-                    download_tracks(radio.tracks, opts, |msg| write_log!(common_state, "{msg}"))
-                        .await;
+                    download_tracks(
+                        radio.tracks.into_iter().map(|t| t.into()).collect(),
+                        opts,
+                        |msg| write_log!(common_state, "{msg}"),
+                    )
+                    .await;
                     Ok(()) as Result<()>
                 }
                 .await;

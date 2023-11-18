@@ -56,11 +56,10 @@ fn save_path(track: &CommonTrack) -> anyhow::Result<PathBuf> {
 }
 
 pub(crate) async fn download_tracks(
-    tracks: Vec<impl Into<CommonTrack>>,
+    tracks: Vec<CommonTrack>,
     opts: CommonOpts,
     log: impl Fn(&str) + Copy,
 ) {
-    let tracks: Vec<CommonTrack> = tracks.into_iter().map(|x| x.into()).collect();
     let len = tracks.len();
 
     log("Download started!");

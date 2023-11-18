@@ -1,3 +1,4 @@
+use anyhow::Context;
 use once_cell::sync::Lazy;
 use openapi::models::{ArtistRun, LikeStatus, PlaylistItem, QueueTrack, Thumbnail, VideoType};
 use regex::Regex;
@@ -15,18 +16,19 @@ pub struct CommonTrack {
     pub year: Option<String>,
 }
 
-impl From<PlaylistItem> for CommonTrack {
-    fn from(track: PlaylistItem) -> Self {
-        Self {
-            video_id: track.video_id,
+impl TryFrom<PlaylistItem> for CommonTrack {
+    type Error = anyhow::Error;
+    fn try_from(track: PlaylistItem) -> Result<Self, Self::Error> {
+        Ok(Self {
+            video_id: track.video_id.context("video_id")?,
             title: track.title,
             artists: track.artists,
             album: track.album.map(|x| x.name),
             thumbnails: track.thumbnails.unwrap_or_default(),
-            like_status: Some(track.like_status),
+            like_status: track.like_status,
             video_type: track.video_type,
             year: None,
-        }
+        })
     }
 }
 

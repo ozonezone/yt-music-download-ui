@@ -1,5 +1,5 @@
 import { Body, Controller, Post, Route } from "tsoa";
-import { AlbumResult, get_album, get_album_browse_id } from "libmuse";
+import { AlbumResult, get_album, get_album_browse_id } from "../muse/mod.ts";
 
 export type AlbumGetParams = {
   browseId: string;
@@ -29,6 +29,7 @@ export class AlbumByPlaylistIdController extends Controller {
       throw new Error("No album found for playlist");
     }
     const album = await get_album(browseId);
+    console.log(JSON.stringify(album, null, 2));
     return album;
   }
 }

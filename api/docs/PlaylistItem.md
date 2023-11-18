@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**video_id** | **String** |  | 
+**video_id** | Option<**String**> |  | 
 **title** | **String** |  | 
 **artists** | [**Vec<crate::models::ArtistRun>**](ArtistRun.md) |  | 
 **album** | Option<[**crate::models::Album**](Album.md)> |  | 
-**like_status** | [**crate::models::LikeStatus**](LikeStatus.md) |  | 
+**like_status** | Option<[**crate::models::LikeStatus**](LikeStatus.md)> |  | 
 **thumbnails** | Option<[**Vec<crate::models::Thumbnail>**](Thumbnail.md)> |  | 
-**is_available** | **bool** |  | 
-**is_explicit** | **bool** |  | 
+**is_available** | Option<**bool**> |  | 
+**is_explicit** | Option<**bool**> |  | 
 **video_type** | Option<[**crate::models::VideoType**](VideoType.md)> |  | 
 **duration** | Option<**String**> |  | 
 **duration_seconds** | Option<**f64**> |  | 

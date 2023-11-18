@@ -13,22 +13,22 @@
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct PlaylistItem {
-    #[serde(rename = "videoId")]
-    pub video_id: String,
+    #[serde(rename = "videoId", deserialize_with = "Option::deserialize")]
+    pub video_id: Option<String>,
     #[serde(rename = "title")]
     pub title: String,
     #[serde(rename = "artists")]
     pub artists: Vec<crate::models::ArtistRun>,
     #[serde(rename = "album", deserialize_with = "Option::deserialize")]
     pub album: Option<Box<crate::models::Album>>,
-    #[serde(rename = "likeStatus")]
-    pub like_status: crate::models::LikeStatus,
+    #[serde(rename = "likeStatus", deserialize_with = "Option::deserialize")]
+    pub like_status: Option<crate::models::LikeStatus>,
     #[serde(rename = "thumbnails", deserialize_with = "Option::deserialize")]
     pub thumbnails: Option<Vec<crate::models::Thumbnail>>,
-    #[serde(rename = "isAvailable")]
-    pub is_available: bool,
-    #[serde(rename = "isExplicit")]
-    pub is_explicit: bool,
+    #[serde(rename = "isAvailable", deserialize_with = "Option::deserialize")]
+    pub is_available: Option<bool>,
+    #[serde(rename = "isExplicit", deserialize_with = "Option::deserialize")]
+    pub is_explicit: Option<bool>,
     #[serde(rename = "videoType", deserialize_with = "Option::deserialize")]
     pub video_type: Option<crate::models::VideoType>,
     #[serde(rename = "duration", deserialize_with = "Option::deserialize")]
@@ -48,7 +48,7 @@ pub struct PlaylistItem {
 }
 
 impl PlaylistItem {
-    pub fn new(video_id: String, title: String, artists: Vec<crate::models::ArtistRun>, album: Option<crate::models::Album>, like_status: crate::models::LikeStatus, thumbnails: Option<Vec<crate::models::Thumbnail>>, is_available: bool, is_explicit: bool, video_type: Option<crate::models::VideoType>, duration: Option<String>, duration_seconds: Option<f64>, set_video_id: Option<String>, feedback_tokens: Option<crate::models::MenuTokens>, feedback_token: Option<FeedbackToken>, rank: Option<String>, change: Option<crate::models::TrendChange>) -> PlaylistItem {
+    pub fn new(video_id: Option<String>, title: String, artists: Vec<crate::models::ArtistRun>, album: Option<crate::models::Album>, like_status: Option<crate::models::LikeStatus>, thumbnails: Option<Vec<crate::models::Thumbnail>>, is_available: Option<bool>, is_explicit: Option<bool>, video_type: Option<crate::models::VideoType>, duration: Option<String>, duration_seconds: Option<f64>, set_video_id: Option<String>, feedback_tokens: Option<crate::models::MenuTokens>, feedback_token: Option<FeedbackToken>, rank: Option<String>, change: Option<crate::models::TrendChange>) -> PlaylistItem {
         PlaylistItem {
             video_id,
             title,

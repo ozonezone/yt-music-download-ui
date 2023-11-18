@@ -1,5 +1,5 @@
 import { Body, Controller, Post, Route } from "tsoa";
-import { get_song, Song } from "libmuse";
+import { get_song, Song } from "../muse/mod.ts";
 
 export type SongGetParams = {
   videoId: string;

@@ -1,5 +1,5 @@
 import { Body, Controller, Post, Route } from "tsoa";
-import { get_queue, Queue } from "libmuse";
+import { get_queue, Queue } from "../muse/mod.ts";
 
 export type QueueGetParams = {
   videoId: string;

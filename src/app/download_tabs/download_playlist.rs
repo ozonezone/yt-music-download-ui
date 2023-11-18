@@ -59,10 +59,12 @@ pub fn PlaylistDownloadForm(cx: Scope) -> Element {
                     }
 
                     let opts = { common_state.read().opts };
-                    download_tracks(playlist.tracks, opts, |msg| {
-                        write_log!(common_state, "{msg}")
-                    })
-                    .await;
+                    let tracks = playlist
+                        .tracks
+                        .iter()
+                        .flat_map(|track| track.clone().try_into())
+                        .collect::<Vec<_>>();
+                    download_tracks(tracks, opts, |msg| write_log!(common_state, "{msg}")).await;
                     Ok(()) as Result<()>
                 }
                 .await;

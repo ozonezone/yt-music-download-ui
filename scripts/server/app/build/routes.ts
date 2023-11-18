@@ -58,7 +58,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "VideoType": {
         "dataType": "refAlias",
-        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["MUSIC_VIDEO_TYPE_OMV"]},{"dataType":"enum","enums":["MUSIC_VIDEO_TYPE_UGC"]},{"dataType":"enum","enums":["MUSIC_VIDEO_TYPE_ATV"]}],"validators":{}},
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["MUSIC_VIDEO_TYPE_OMV"]},{"dataType":"enum","enums":["MUSIC_VIDEO_TYPE_UGC"]},{"dataType":"enum","enums":["MUSIC_VIDEO_TYPE_ATV"]},{"dataType":"enum","enums":["MUSIC_VIDEO_TYPE_PRIVATELY_OWNED_TRACK"]}],"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "MenuTokens": {
@@ -79,15 +79,15 @@ const models: TsoaRoute.Models = {
     "PlaylistItem": {
         "dataType": "refObject",
         "properties": {
-            "videoId": {"dataType":"string","required":true},
+            "videoId": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
             "title": {"dataType":"string","required":true},
             "artists": {"dataType":"array","array":{"dataType":"refAlias","ref":"SongArtist"},"required":true},
             "album": {"dataType":"union","subSchemas":[{"ref":"Album"},{"dataType":"enum","enums":[null]}],"required":true},
-            "likeStatus": {"ref":"LikeStatus","required":true},
-            "thumbnails": {"dataType":"array","array":{"dataType":"refObject","ref":"Thumbnail"},"required":true},
-            "isAvailable": {"dataType":"boolean","required":true},
-            "isExplicit": {"dataType":"boolean","required":true},
-            "videoType": {"ref":"VideoType","required":true},
+            "likeStatus": {"dataType":"union","subSchemas":[{"ref":"LikeStatus"},{"dataType":"enum","enums":[null]}],"required":true},
+            "thumbnails": {"dataType":"union","subSchemas":[{"dataType":"array","array":{"dataType":"refObject","ref":"Thumbnail"}},{"dataType":"enum","enums":[null]}],"required":true},
+            "isAvailable": {"dataType":"union","subSchemas":[{"dataType":"boolean"},{"dataType":"enum","enums":[null]}],"required":true},
+            "isExplicit": {"dataType":"union","subSchemas":[{"dataType":"boolean"},{"dataType":"enum","enums":[null]}],"required":true},
+            "videoType": {"dataType":"union","subSchemas":[{"ref":"VideoType"},{"dataType":"enum","enums":[null]}],"required":true},
             "duration": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
             "duration_seconds": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
             "setVideoId": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
@@ -130,7 +130,7 @@ const models: TsoaRoute.Models = {
             "authors": {"dataType":"array","array":{"dataType":"refObject","ref":"ArtistRun"},"required":true},
             "type": {"dataType":"string","required":true},
             "year": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
-            "trackCount": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
+            "trackCount": {"dataType":"any","required":true},
             "duration": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
             "duration_seconds": {"dataType":"double","required":true},
             "tracks": {"dataType":"array","array":{"dataType":"refObject","ref":"PlaylistItem"},"required":true},
@@ -149,7 +149,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "AlbumType": {
         "dataType": "refAlias",
-        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["album"]},{"dataType":"enum","enums":["single"]},{"dataType":"enum","enums":["ep"]}],"validators":{}},
+        "type": {"dataType":"string","validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ParsedAlbum": {
@@ -208,6 +208,7 @@ const models: TsoaRoute.Models = {
             "id": {"dataType":"string","required":true},
             "tracks": {"dataType":"array","array":{"dataType":"refObject","ref":"PlaylistItem"},"required":true},
             "other_versions": {"dataType":"union","subSchemas":[{"dataType":"array","array":{"dataType":"refObject","ref":"ParsedAlbum"}},{"dataType":"enum","enums":[null]}],"required":true},
+            "artists": {"dataType":"array","array":{"dataType":"refObject","ref":"ArtistRun"}},
         },
         "additionalProperties": false,
     },
@@ -264,7 +265,7 @@ const models: TsoaRoute.Models = {
             "related": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
             "author": {"dataType":"union","subSchemas":[{"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},"name":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true}}},{"dataType":"enum","enums":[null]}],"required":true},
             "continuation": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
-            "current": {"dataType":"union","subSchemas":[{"dataType":"nestedObjectLiteral","nestedProperties":{"index":{"dataType":"double","required":true},"playlistId":{"dataType":"string","required":true},"videoId":{"dataType":"string","required":true}}},{"dataType":"enum","enums":[null]}],"required":true},
+            "current": {"dataType":"union","subSchemas":[{"dataType":"nestedObjectLiteral","nestedProperties":{"index":{"dataType":"double"},"playlistId":{"dataType":"string"},"videoId":{"dataType":"string","required":true}}},{"dataType":"enum","enums":[null]}],"required":true},
         },
         "additionalProperties": false,
     },
