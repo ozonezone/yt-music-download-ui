@@ -1,10 +1,10 @@
 import express, { json, urlencoded } from "express";
 import { RegisterRoutes } from "./build/routes.ts";
-import { DenoFileStore, setup } from "libmuse";
+import { DenoFileStore, setup } from "../../muse/mod.ts";
 
 const port = Deno.args[0];
-const authPath = Deno.args[1];
-const language = Deno.args[2];
+export const authPath = Deno.args[1];
+export const language = Deno.args[2];
 
 setup({
   store: new DenoFileStore(authPath),

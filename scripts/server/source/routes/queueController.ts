@@ -1,5 +1,6 @@
 import { Body, Controller, Post, Route } from "tsoa";
-import { get_queue, Queue } from "../muse/mod.ts";
+import { DenoFileStore, get_queue, Queue, setup } from "../../../muse/mod.ts";
+import { authPath, language } from "../../app/app.ts";
 
 export type QueueGetParams = {
   videoId: string;
@@ -12,6 +13,10 @@ export class QueueController extends Controller {
   public async getQueue(
     @Body() body: QueueGetParams,
   ): Promise<Queue> {
+    setup({
+      store: new DenoFileStore(authPath),
+      language,
+    });
     return await get_queue(body.videoId, null, { radio: body.radio });
   }
 }

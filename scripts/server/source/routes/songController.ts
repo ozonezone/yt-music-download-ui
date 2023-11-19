@@ -1,5 +1,6 @@
 import { Body, Controller, Post, Route } from "tsoa";
-import { get_song, Song } from "../muse/mod.ts";
+import { DenoFileStore, get_song, setup, Song } from "../../../muse/mod.ts";
+import { authPath, language } from "../../app/app.ts";
 
 export type SongGetParams = {
   videoId: string;
@@ -11,6 +12,10 @@ export class SongController extends Controller {
   public async getSong(
     @Body() body: SongGetParams,
   ): Promise<Song> {
+    setup({
+      store: new DenoFileStore(authPath),
+      language,
+    });
     return await get_song(body.videoId);
   }
 }

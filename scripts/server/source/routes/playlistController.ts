@@ -1,5 +1,11 @@
 import { Body, Controller, Post, Route } from "tsoa";
-import { get_playlist, Playlist } from "../muse/mod.ts";
+import {
+  DenoFileStore,
+  get_playlist,
+  Playlist,
+  setup,
+} from "../../../muse/mod.ts";
+import { authPath, language } from "../../app/app.ts";
 
 export type PlaylistGetParams = {
   playlistId: string;
@@ -11,6 +17,10 @@ export class PlaylistController extends Controller {
   public async getPlaylist(
     @Body() body: PlaylistGetParams,
   ): Promise<Playlist> {
+    setup({
+      store: new DenoFileStore(authPath),
+      language,
+    });
     return await get_playlist(body.playlistId);
   }
 }
