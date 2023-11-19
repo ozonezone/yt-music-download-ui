@@ -29,7 +29,6 @@ export class AlbumByPlaylistIdController extends Controller {
       throw new Error("No album found for playlist");
     }
     const album = await get_album(browseId);
-    console.log(JSON.stringify(album, null, 2));
     return album;
   }
 }

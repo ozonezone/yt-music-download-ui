@@ -82,7 +82,7 @@ pub(crate) async fn download_video(
     let mut args = vec![
         &video_url,
         "-f",
-        "bestaudio",
+        "141",
         "-o",
         output_file,
         "--verbose",
